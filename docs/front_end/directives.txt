@@ -26,3 +26,4 @@ firstName, lastName, address, city et email. Le tableau des produits envoyé au
 backend doit être un array de strings product_id. Les types de ces champs et leur
 présence doivent être validés avant l’envoi des données au serveur.
 
+15/03 arrêt sur -> comment rentrer plusieurs fois le même produit dans localstorage
