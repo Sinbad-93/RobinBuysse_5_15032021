@@ -1,0 +1,8 @@
+.picture_container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+img{
+    border: 3px black solid;
+}
