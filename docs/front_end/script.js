@@ -15,8 +15,12 @@ productsPictures[0].addEventListener('click', function(){
 /*utilisé sur le onclick html*/
 function getId(number)
 {
-console.log(number);
-localStorage.setItem('number',number);
+const separateString = number.split('_');
+console.log(separateString);
+/*localStorage.clear();*/
+localStorage.setItem('productId',separateString[1]);
+localStorage.setItem(separateString[0],separateString[1]);
+console.log(localStorage);
 }
 
 console.log(productsPicturesNames);
