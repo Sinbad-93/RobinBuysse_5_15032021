@@ -1,7 +1,7 @@
 var product = document.querySelector('.product');
 var requestData = [];
-var dataa = [];
 var allData = [];
+var differentsProducts = [];
 id = localStorage.getItem('productId');
 
 var title = document.querySelector('.title');
@@ -15,11 +15,14 @@ console.log(title);
 
 
 function getOneProduct(product_id){
+  let data;
   fetch('http://localhost:3000/api/teddies/' + product_id)
   .then(async response => {
-const data = await response.json()
+    data = await response.json()
   .then(data => requestData = data);
-    keepData(requestData);
+  if (requestData != []){
+    allData.push(requestData);
+  dataWatch.watched = allData;}
     /*console.log(requestData);*/
     /*var path = requestData['imageUrl'];
     product.setAttribute("src", path);
@@ -28,11 +31,13 @@ const data = await response.json()
     description.textContent = requestData['description'];
     color1.textContent = requestData['colors'][0];	*/
     
-     });}
+     })}
+
+
   
 function getAllBucket() {
   var inBucket = JSON.parse(localStorage.getItem('inBucket'));
-  var differentsProducts = [];
+  
   console.log(inBucket);
   /* récupérer les articles en exemplaire uniques en comparant deux array,
   possible avec includes, mais non compatible Internet Explorer*/
@@ -43,11 +48,11 @@ function getAllBucket() {
     for (i in differentsProducts){
       getOneProduct(differentsProducts[i]);
     }; 
+    console.log(differentsProducts)
   }
 
-function keepData(data){
-  allData.push(data);
-}
+
+
 
 /*fonction GET charger les données sur la page*/
 function loadHTMLTable(data) {
@@ -76,10 +81,54 @@ color1.textContent = requestData['colors'][0];*/
   /*convertit tout en string puis le rentre dans le DOM */
   tableau.innerHTML = tableauHtml;
 }
+var timeoutID;
+function delayedAlert() {
+  timeoutID = window.setTimeout(slowAlert, 4000);
+}
+function slowAlert() {
+  dataWatch.watched = allData.length;
+}
 
 console.log(localStorage);
-/*getOneProduct(id);*/
 getAllBucket();
-console.log(allData);
-console.log(allData[0]);
-loadHTMLTable(allData);
+
+/*loadHTMLTable(allData);*/
+
+/*surveiller la fin de la requete fetch*/
+dataWatch = {
+  watchedValue: allData.length,
+  watchedListener: function(value) {},
+  set watched(value) {
+    this.watchedValue = value;
+    this.watchedListener(value);
+  },
+  get watched() {
+    return this.watchedValue;
+  },
+  registerListener: function(listener) {
+    this.watchedListener = listener;
+  }
+}
+
+dataWatch.registerListener(function(value) {
+      console.log(value);
+      console.log(value.length);
+      console.log(differentsProducts.length);
+  if (value.length === differentsProducts.length){ console.log('les données sont chargées')};
+});
+
+/* with error gest */
+/*function getOneProduct(product_id){
+  try {
+  fetch('http://localhost:3000/api/teddies/' + product_id)
+  .then(async response => {
+    if(response.ok){
+      const data = await response.json()
+  .then(data => requestData = data);
+  if (requestData != []){
+    allData.push(requestData);}} 
+  else {
+      console.error('Server response : ', response.status)
+    }});}  catch (err){
+      console.log(err)
+}}     */
