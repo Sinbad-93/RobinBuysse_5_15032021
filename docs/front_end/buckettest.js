@@ -7,7 +7,7 @@ var title = document.querySelector('.title');
 var price = document.querySelector('.price');
 var description = document.querySelector('.description');
 var color1 = document.querySelector('.color1');
-
+var quantity = document.querySelector('.quantity');
 console.log(title);
 var allData = [];
 var compteur = 0;
@@ -19,8 +19,7 @@ function getOneProduct(product_id){
     data = await response.json()
   .then(data => requestData = data);
   console.log(requestData['name'])
-    allData.push(requestData);
-    dataWatch.watched= allData;
+  loadHTMLTable(requestData);
     /*console.log(requestData);*/
     /*var path = requestData['imageUrl'];
     product.setAttribute("src", path);
@@ -48,34 +47,9 @@ function getOneProduct(product_id){
     console.log(differentsProducts)
   }
 
-/*surveiller la fin de la requete fetch*/
-dataWatch = {
-  watchedValue: allData.length,
-  watchedListener: function(value) {},
-  set watched(value) {
-    this.watchedValue = value;
-    this.watchedListener(value);
-  },
-  get watched() {
-    return this.watchedValue;
-  },
-  registerListener: function(listener) {
-    this.watchedListener = listener;
-  }
-}
-
-dataWatch.registerListener(function(value) {
-      console.log(value);
-      console.log(value.length);
-      console.log(differentsProducts.length);
-  if (value.length === differentsProducts.length){ 
-    console.log('les données sont chargées');
-    quantityCount(allData);
-    loadHTMLTable(allData);
-    totalPrice();
-    compteur += 1;
-    };
-}); 
+/*quantityCount(allData);*/
+compteur += 1;
+ 
 console.log('le compteur : ' + compteur);
 /*fonction GET charger les données sur la page*/
 function loadHTMLTable(data) {
@@ -83,29 +57,23 @@ function loadHTMLTable(data) {
   /*if (data.length === 0) {/* au cas ou il n'y a pas de données
       tableau.innerHTML = "<tr><td class='no-data' colspan='5'>No Data</td></tr>";
       return;}*/
-      
 let tableauHtml = "";
-
-
 /*var path = requestData['imageUrl'];
 product.setAttribute("src", path);
 color1.textContent = requestData['colors'][0];*/
 /*data = param de la fn*/
  for (i in data){
-   var memorisedId = data[i]['_id'];
       tableauHtml += "<tr>";
       tableauHtml += `<td><img class="little_picture" src='${data[i]['imageUrl']}'></td>`;
       tableauHtml += `<td>${data[i]['name']}</td>`;
-      tableauHtml += `<td class='price'>${data[i]['price']}</td>`;
-      tableauHtml += `<td> Quantité <span id="Id${memorisedId}" class="quantity">${productCountBefore(memorisedId)}</span>
-      <button id="${memorisedId}" onclick="removeProductToBucketClick(this.id);" >-</button>
-    <button id="${memorisedId}" onclick="addProductToBucketClick(this.id);" >+</button></td>`;
+      tableauHtml += `<td>${data[i]['price']}</td>`;
+      tableauHtml += `<td> Quantité <span class=quantity>${productCountBefore(data[i]['_id'])}</span>
+      <button onclick=onclick="removeProductToBucketClick()" >-</button>
+    <button onclick="addProductToBucketClick()" >+</button></td>`;
       tableauHtml += "</tr>";
  }
   /*convertit tout en string puis le rentre dans le DOM */
   tableau.innerHTML = tableauHtml;
-  /*tableau.insertAdjacentHTML("afterbegin", tableauHtml);*/
-  
 }
 /*----------------COMPTER LE NOMBRE D ARTICLE DANS LE PANIER----------*/
 function productCountBefore(string_id){
@@ -126,8 +94,7 @@ function quantityCount(data){
 }}
 
 /*-------------------AJOUTER UN ARTICLE DANS LE PANIER----------------*/
-function addProductToBucketById(productAdded){
-  console.log('PAR ICI OHEEEEEE ' + productAdded);
+function addProductToBucket(productAdded){
   /* console.log(localStorage);
    console.log(isKeyExists(localStorage,'inBucket'));*/
    var inBucket = JSON.parse(localStorage.getItem('inBucket'));
@@ -143,7 +110,7 @@ function addProductToBucketById(productAdded){
  ;}
  
  /*---------------ENLEVER UN ARTICLE DU PANIER--------------------*/
- function removeProductToBucketById(productAdded){
+ function removeProductToBucket(productAdded){
    var inBucket = JSON.parse(localStorage.getItem('inBucket'));
    console.log('Dans votre panier initial :');console.log(inBucket);
    var position = inBucket.indexOf(productAdded);
@@ -166,30 +133,18 @@ function addProductToBucketById(productAdded){
        repetitonOfId += 1;
      }
    }
-   if (document.querySelector('.quantity') != null ){
-   var quantity = document.querySelectorAll('.quantity');
-   var compareId = document.querySelector('#Id'+string_id);
-   for (value of quantity.values()){
-   if(value === compareId){
    /*actualiser les quantités*/
-   console.log('bravo');
-   value.textContent = repetitonOfId;}
-  else {}
-}}
+   quantity.textContent = repetitonOfId;
     /*console.log('il y a ' + qtty);*/
  }
 
- function addProductToBucketClick(idOnButton){
-  addProductToBucketById(idOnButton)
+ function addProductToBucketClick(){
+  addProductToBucket(id)
 }
-function removeProductToBucketClick(idOnButton){
-  removeProductToBucketById(idOnButton)
+function removeProductToBucketClick(){
+  removeProductToBucket(id)
 }
 
-
-function totalPrice(){
-  
-}
 
 console.log(localStorage);
 getAllBucket();
@@ -197,18 +152,3 @@ getAllBucket();
 
 
 
-/* with error gest */
-/*function getOneProduct(product_id){
-  try {
-  fetch('http://localhost:3000/api/teddies/' + product_id)
-  .then(async response => {
-    if(response.ok){
-      const data = await response.json()
-  .then(data => requestData = data);
-  if (requestData != []){
-    allData.push(requestData);}} 
-  else {
-      console.error('Server response : ', response.status)
-    }});}  catch (err){
-      console.log(err)
-}}     */
