@@ -4,14 +4,58 @@ var differentsProducts = [];
 var totalSum = 0 ;
 var allData = [];
 var compteur = 0;
-
 var product = document.querySelector('.product');
 var id = localStorage.getItem('productId');
+/*formulaire*/
+var products = [id, '5beaa8bf1c9d440000a57d94'];
+let contact;
+console.log(products);
+/*-----*/
 var title = document.querySelector('.title');
 var price = document.querySelector('.price');
 var description = document.querySelector('.description');
 var color1 = document.querySelector('.color1');
 
+function saveData(){
+  var costumerFirstName = document.querySelector('#firstName');
+  var costumerLastName = document.querySelector('#lastName');
+  var costumerAddress = document.querySelector('#address');
+  var costumerCity = document.querySelector('#city');
+  var costumerEmail = document.querySelector('#email');
+  contact = {
+    firstName: costumerFirstName.value,
+    lastName: costumerLastName.value,
+    address: costumerAddress.value,
+    city: costumerCity.value,
+    email: costumerEmail.value,
+  };
+  let objetContact = {contact, products};
+  console.log(JSON.stringify(objetContact));
+  saveOrder(objetContact);
+}
+
+
+
+function saveOrder(data){
+const requestOptions = {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify( data )};
+  fetch('http://localhost:3000/api/teddies/order', requestOptions)
+  .then(async response => {
+      const data = await response.json()
+  .then(data => localStorage.setItem('orderData',JSON.stringify(data))
+  );
+  // check for error response
+   if (!response.ok) {
+  // get error message from body or default to response status
+  const error = (data && data.message) || response.status;
+  return Promise.reject(error); }})
+  .catch(error => {
+  this.errorMessage = error;
+  console.error('There was an error!', error);});
+  document.location.href="http://127.0.0.1:5500/docs/front_end/order.html";
+}
 
 function getOneProduct(product_id){
   let data;

@@ -17,9 +17,8 @@ function getOneProduct(product_id){
   fetch('http://localhost:3000/api/teddies/' + product_id)
   .then(async response => {
     data = await response.json()
-  .then(data => requestData = data);
-  console.log(requestData['name'])
-  loadHTMLTable(requestData);
+  .then(data => loadHTMLTable(data));
+  
     /*console.log(requestData);*/
     /*var path = requestData['imageUrl'];
     product.setAttribute("src", path);
@@ -64,7 +63,7 @@ color1.textContent = requestData['colors'][0];*/
 /*data = param de la fn*/
  for (i in data){
       tableauHtml += "<tr>";
-      tableauHtml += `<td><img class="little_picture" src='${data[i]['imageUrl']}'></td>`;
+      /*tableauHtml += `<td><img class="little_picture" src='${data[i]['imageUrl']}'></td>`;*/
       tableauHtml += `<td>${data[i]['name']}</td>`;
       tableauHtml += `<td>${data[i]['price']}</td>`;
       tableauHtml += `<td> Quantité <span class=quantity>${productCountBefore(data[i]['_id'])}</span>

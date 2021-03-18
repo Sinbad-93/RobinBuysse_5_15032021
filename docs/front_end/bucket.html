@@ -22,29 +22,29 @@
 
   <p>Pour finaliser la commande, veuillez rentrez vos coordonnées  :</p>
   <div class="form_container">
-  <form action="/ma-page-de-traitement" method="post">
+  <form action="javascript:void(0);" >
   <div>
       <label for="name">firstName :</label>
-      <input type="text" id="name" name="user_name">
+      <input type="text" id="firstName" name="user_name">
   </div>
   <div>
     <label for="name">lastName :</label>
-    <input type="text" id="name" name="user_name">
+    <input type="text" id="lastName" name="user_name">
 </div>
 <div>
-    <label for="name">adress :</label>
-    <input type="text" id="" name="">
+    <label for="name">address :</label>
+    <input type="text" id="address" name="">
 </div>
 <div>
     <label for="name">city :</label>
-    <input type="text" id="" name="">
+    <input type="text" id="city" name="">
 </div>
   <div>
       <label for="mail">e-mail :</label>
-      <input type="email" id="mail" name="user_mail">
+      <input type="email" id="email" name="user_mail">
   </div>
 <div>
-    <input type="submit" name="send" value="Commander">
+    <input type="submit" onclick='saveData()' name="send" value="Commander">
 </div>
 </div></div>
 
