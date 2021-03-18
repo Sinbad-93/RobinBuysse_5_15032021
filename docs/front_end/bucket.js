@@ -1,16 +1,17 @@
-var product = document.querySelector('.product');
 let requestData;
 var allData = [];
 var differentsProducts = [];
-id = localStorage.getItem('productId');
+var totalSum = 0 ;
+var allData = [];
+var compteur = 0;
+
+var product = document.querySelector('.product');
+var id = localStorage.getItem('productId');
 var title = document.querySelector('.title');
 var price = document.querySelector('.price');
 var description = document.querySelector('.description');
 var color1 = document.querySelector('.color1');
 
-console.log(title);
-var allData = [];
-var compteur = 0;
 
 function getOneProduct(product_id){
   let data;
@@ -18,24 +19,15 @@ function getOneProduct(product_id){
   .then(async response => {
     data = await response.json()
   .then(data => requestData = data);
-  console.log(requestData['name'])
+  /*console.log(requestData['name'])*/
     allData.push(requestData);
     dataWatch.watched= allData;
-    /*console.log(requestData);*/
-    /*var path = requestData['imageUrl'];
-    product.setAttribute("src", path);
-    title.textContent = requestData['name'];
-    price.textContent = requestData['price'];
-    description.textContent = requestData['description'];
-    color1.textContent = requestData['colors'][0];	*/
-    
      })}
 
 
-  function getAllBucket() {
+function getAllBucket() {
   var inBucket = JSON.parse(localStorage.getItem('inBucket'));
-  
-  console.log(inBucket);
+  /*console.log(inBucket);*/
   /* récupérer les articles en exemplaire uniques en comparant deux array,
   possible avec includes, mais non compatible Internet Explorer*/
   for (i in inBucket){
@@ -45,7 +37,7 @@ function getOneProduct(product_id){
     for (i in differentsProducts){
       getOneProduct(differentsProducts[i]);
     }; 
-    console.log(differentsProducts)
+    /*console.log(differentsProducts)*/
   }
 
 /*surveiller la fin de la requete fetch*/
@@ -65,32 +57,26 @@ dataWatch = {
 }
 
 dataWatch.registerListener(function(value) {
-      console.log(value);
+      /*console.log(value);
       console.log(value.length);
-      console.log(differentsProducts.length);
+      console.log(differentsProducts.length);*/
   if (value.length === differentsProducts.length){ 
     console.log('les données sont chargées');
     quantityCount(allData);
     loadHTMLTable(allData);
+    /*delayedAlert();*/
     totalPrice();
-    compteur += 1;
+    
     };
 }); 
-console.log('le compteur : ' + compteur);
-/*fonction GET charger les données sur la page*/
+
+/*inserer les données sur la page*/
 function loadHTMLTable(data) {
   const tableau = document.querySelector('table tbody');
   /*if (data.length === 0) {/* au cas ou il n'y a pas de données
       tableau.innerHTML = "<tr><td class='no-data' colspan='5'>No Data</td></tr>";
       return;}*/
-      
 let tableauHtml = "";
-
-
-/*var path = requestData['imageUrl'];
-product.setAttribute("src", path);
-color1.textContent = requestData['colors'][0];*/
-/*data = param de la fn*/
  for (i in data){
    var memorisedId = data[i]['_id'];
       tableauHtml += "<tr>";
@@ -104,9 +90,12 @@ color1.textContent = requestData['colors'][0];*/
  }
   /*convertit tout en string puis le rentre dans le DOM */
   tableau.innerHTML = tableauHtml;
-  /*tableau.insertAdjacentHTML("afterbegin", tableauHtml);*/
-  
+
+  /*Autre manière de faire :
+  tableau.insertAdjacentHTML("afterbegin", tableauHtml);*/
+
 }
+
 /*----------------COMPTER LE NOMBRE D ARTICLE DANS LE PANIER----------*/
 function productCountBefore(string_id){
   var inBucket = JSON.parse(localStorage.getItem('inBucket'));
@@ -136,6 +125,7 @@ function addProductToBucketById(productAdded){
    localStorage.setItem('inBucket', JSON.stringify(inBucket));
    inBucket =  JSON.parse(localStorage.getItem('inBucket'));
    productCount(productAdded);
+   totalPrice();
    console.log('Dans votre panier désormais :');console.log(inBucket);
    /*Object.keys(localStorage).forEach(function(key){
    console.log(key,localStorage.getItem(key));
@@ -154,6 +144,7 @@ function addProductToBucketById(productAdded){
    localStorage.setItem('inBucket', JSON.stringify(inBucket));
    inBucket =  JSON.parse(localStorage.getItem('inBucket'));
    productCount(productAdded);
+   totalPrice();
    console.log('Dans votre panier désormais :');console.log(inBucket);
  }
  /*----------------COMPTER LE NOMBRE D ARTICLE DANS LE PANIER----------*/
@@ -161,7 +152,7 @@ function addProductToBucketById(productAdded){
    var inBucket = JSON.parse(localStorage.getItem('inBucket'));
    var repetitonOfId = 0;
    for (i in inBucket){
-     console.log(inBucket[i]); 
+     /*console.log(inBucket[i]);*/ 
      if (inBucket[i]=== string_id){
        repetitonOfId += 1;
      }
@@ -178,7 +169,7 @@ function addProductToBucketById(productAdded){
 }}
     /*console.log('il y a ' + qtty);*/
  }
-
+/*----------------appeler les fonctions à l'aide de onclick sur html----------*/
  function addProductToBucketClick(idOnButton){
   addProductToBucketById(idOnButton)
 }
@@ -186,16 +177,48 @@ function removeProductToBucketClick(idOnButton){
   removeProductToBucketById(idOnButton)
 }
 
-
+/*-----------CALCULATEUR DE PRIX TOTAL, articles * quantités----------*/
 function totalPrice(){
-  
+  totalSum = 0;
+  var arrayOfPrices = [];
+  var arrayOfQuantity = [];
+  var totalPrices = document.querySelector('.total');
+ var productsPrices = document.querySelectorAll('.price');
+ var productsQuantity = document.querySelectorAll('.quantity');
+ /*console.log(productsPrices);*/
+  for (value of productsPrices.values()){
+    arrayOfPrices.push(value.textContent);
+  }
+  for (value of productsQuantity.values()){
+    arrayOfQuantity.push(value.textContent)
+  }
+  var multiplicateur = {};
+   multiplicateur['price']= arrayOfPrices;
+   multiplicateur['quantity']= arrayOfQuantity;
+    for (i in arrayOfPrices){
+    totalSum += multiplicateur['price'][i] * multiplicateur['quantity'][i]
+  };
+ /*return Array.prototype.map.call(productsPrices, function(elem) { return elem.textContent; });*/
+  /*console.log(totalSum)*/
+  totalPrices.innerHTML = totalSum;
 }
+
 
 console.log(localStorage);
 getAllBucket();
+
+
+/*-------------BROUILLON------------------*/
+/*function delayedAlert() {
+  
+  timeoutID = window.setTimeout(slowAlert, 5000);
+}*/
 /*loadHTMLTable(allData);*/
 
-
+/*function slowAlert() {
+  console.log('5 SECONDES');
+  totalPrice();
+}*/
 
 /* with error gest */
 /*function getOneProduct(product_id){
