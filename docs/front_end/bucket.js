@@ -4,67 +4,55 @@ var differentsProducts = [];
 var totalSum = 0 ;
 var allData = [];
 var compteur = 0;
-var product = document.querySelector('.product');
 var id = localStorage.getItem('productId');
 /*formulaire*/
 let inBucket;
 let products;
 console.log(products);
 /*-----*/
+/*récupérer elements du DOM*/
+var product = document.querySelector('.product');
 var title = document.querySelector('.title');
 var price = document.querySelector('.price');
 var description = document.querySelector('.description');
 var color1 = document.querySelector('.color1');
 
-function saveData(){
-  var costumerFirstName = document.querySelector('#firstName');
-  var costumerLastName = document.querySelector('#lastName');
-  var costumerAddress = document.querySelector('#address');
-  var costumerCity = document.querySelector('#city');
-  var costumerEmail = document.querySelector('#email');
-  contact = {
-    firstName: costumerFirstName.value,
-    lastName: costumerLastName.value,
-    address: costumerAddress.value,
-    city: costumerCity.value,
-    email: costumerEmail.value,
-  };
-  products = inBucket;
-  let objetContact = {contact, products};
-  localStorage.setItem('orderData',JSON.stringify(objetContact));
-
-  console.log(JSON.stringify(objetContact));
-  document.location.href="order.html" ;
-}
-
+/*récuperer un produit en fonction de son id, graçe à l'api*/
 function getOneProduct(product_id){
   let data;
   fetch('http://localhost:3000/api/teddies/' + product_id)
   .then(async response => {
     data = await response.json()
   .then(data => requestData = data);
-  /*console.log(requestData['name'])*/
+  /*insérer les données dans une array*/
     allData.push(requestData);
+    /*surveiller l'etat de l'array*/
     dataWatch.watched= allData;
      })}
 
-
+/*récuperer le contenu du panier pour pouvoir afficher les données*/
 function getAllBucket() {
+  /*REF01 récuperer l'etat du panier*/
   inBucket = JSON.parse(localStorage.getItem('inBucket'));
-  /*console.log(inBucket);*/
+  /*gérer le cas du panier vide*/
+  if (inBucket.length === 0){
+    loadHTMLTable(inBucket);
+  }
   /* récupérer les articles en exemplaire uniques en comparant deux array,
-  possible avec includes, mais non compatible Internet Explorer*/
+  également possible et plus simple avec includes, mais non compatible Internet Explorer*/
   for (i in inBucket){
+    /*si le produit est déjà dans la liste, ne rien faire*/
     if (differentsProducts.indexOf(inBucket[i]) != -1){}
+    /*sinon insérer le produit en exemplaire unique*/
     else {differentsProducts.push(inBucket[i])}
     }
+    /*boucler sur l'API les Id de produits du panier*/
     for (i in differentsProducts){
       getOneProduct(differentsProducts[i]);
     }; 
-    /*console.log(differentsProducts)*/
   }
 
-/*surveiller la fin de la requete fetch*/
+/*surveiller la fin de la requete fetch/ fin de la promesse avec getter et setter*/
 dataWatch = {
   watchedValue: allData.length,
   watchedListener: function(value) {},
@@ -79,16 +67,17 @@ dataWatch = {
     this.watchedListener = listener;
   }
 }
-
+/*fonction qui s'enclenche uniquement si la promesse est résolue*/
 dataWatch.registerListener(function(value) {
-      /*console.log(value);
-      console.log(value.length);
-      console.log(differentsProducts.length);*/
   if (value.length === differentsProducts.length){ 
-    console.log('les données sont chargées');
-    quantityCount(allData);
+    /*console.log('les données sont chargées');*/
+
+    /*compter les quantités d'articles*/
+    /*quantityCount(allData);*/
+
+    /*insérer les données dans le html*/
     loadHTMLTable(allData);
-    /*delayedAlert();*/
+    /*faire le total*/
     totalPrice();
     
     };
@@ -96,11 +85,15 @@ dataWatch.registerListener(function(value) {
 
 /*inserer les données sur la page*/
 function loadHTMLTable(data) {
+  /*récuperer élément du DOM*/
   const tableau = document.querySelector('table tbody');
-  /*if (data.length === 0) {/* au cas ou il n'y a pas de données
-      tableau.innerHTML = "<tr><td class='no-data' colspan='5'>No Data</td></tr>";
-      return;}*/
+  /*gérer le cas du panier vide*/
+  if (data.length === 0) {
+      tableau.innerHTML = "<tr><td class='no-data' colspan='5'>Votre panier est vide</td></tr>";
+    return;}
+/*initialiser insertion de données*/
 let tableauHtml = "";
+/*insérer les données dans la variable en bouclant sur chaque produit*/
  for (i in data){
    var memorisedId = data[i]['_id'];
       tableauHtml += "<tr>";
@@ -112,16 +105,15 @@ let tableauHtml = "";
     <button id="${memorisedId}" onclick="addProductToBucketClick(this.id);" >+</button></td>`;
       tableauHtml += "</tr>";
  }
-  /*convertit tout en string puis le rentre dans le DOM */
+  /*insérer la variable dans un élément du DOM pour afficher données */
   tableau.innerHTML = tableauHtml;
-
   /*Autre manière de faire :
   tableau.insertAdjacentHTML("afterbegin", tableauHtml);*/
-
 }
 
-/*----------------COMPTER LE NOMBRE D ARTICLE DANS LE PANIER----------*/
+/*----------------????? INUTILES LES DEUX ?????----------*/
 function productCountBefore(string_id){
+  /*fonction similaire à celle dans product.js*/
   var inBucket = JSON.parse(localStorage.getItem('inBucket'));
   var repetitonOfId = 0;
   for (i in inBucket){ 
@@ -131,7 +123,6 @@ function productCountBefore(string_id){
   }
   /*actualiser les quantités*/
   return repetitonOfId;
-   /*console.log('il y a ' + qtty);*/
 }
 function quantityCount(data){
   for (i in data){
@@ -140,58 +131,58 @@ function quantityCount(data){
 
 /*-------------------AJOUTER UN ARTICLE DANS LE PANIER----------------*/
 function addProductToBucketById(productAdded){
-  console.log('PAR ICI OHEEEEEE ' + productAdded);
-  /* console.log(localStorage);
-   console.log(isKeyExists(localStorage,'inBucket'));*/
+  /*fonction déjà commenté dans product.js*/
    var inBucket = JSON.parse(localStorage.getItem('inBucket'));
-   console.log('Dans votre panier initial :');console.log(inBucket);
    inBucket.push(productAdded);
    localStorage.setItem('inBucket', JSON.stringify(inBucket));
-   inBucket =  JSON.parse(localStorage.getItem('inBucket'));
+
+   /*inBucket =  JSON.parse(localStorage.getItem('inBucket'));*/
+
    productCount(productAdded);
+
    totalPrice();
-   console.log('Dans votre panier désormais :');console.log(inBucket);
-   /*Object.keys(localStorage).forEach(function(key){
-   console.log(key,localStorage.getItem(key));
- })*/
+
  ;}
  
  /*---------------ENLEVER UN ARTICLE DU PANIER--------------------*/
  function removeProductToBucketById(productAdded){
+    /*fonction déjà commenté dans product.js*/
    var inBucket = JSON.parse(localStorage.getItem('inBucket'));
-   console.log('Dans votre panier initial :');console.log(inBucket);
    var position = inBucket.indexOf(productAdded);
    if (position > -1 ){
      var removedItem = inBucket.splice(position, 1);
    }
    else { alert('quantité déjà à zéro dans votre panier')};
    localStorage.setItem('inBucket', JSON.stringify(inBucket));
-   inBucket =  JSON.parse(localStorage.getItem('inBucket'));
+
+   /*inBucket =  JSON.parse(localStorage.getItem('inBucket'));*/
+
    productCount(productAdded);
    totalPrice();
-   console.log('Dans votre panier désormais :');console.log(inBucket);
  }
  /*----------------COMPTER LE NOMBRE D ARTICLE DANS LE PANIER----------*/
  function productCount(string_id){
+   /*similaire à product.js*/
    var inBucket = JSON.parse(localStorage.getItem('inBucket'));
    var repetitonOfId = 0;
    for (i in inBucket){
-     /*console.log(inBucket[i]);*/ 
      if (inBucket[i]=== string_id){
        repetitonOfId += 1;
      }
    }
+   /*vérifer que le noeud Html a déjà été créé*/
    if (document.querySelector('.quantity') != null ){
+    /*récuperer l'élément quantité par sa classe et par son id*/
    var quantity = document.querySelectorAll('.quantity');
    var compareId = document.querySelector('#Id'+string_id);
+  /*comparer les deux pour changer la quantité uniquement
+  du produit concerné par l'id passé en paramètre*/
    for (value of quantity.values()){
    if(value === compareId){
-   /*actualiser les quantités*/
-   console.log('bravo');
+   /*actualiser les quantités du produit cliqué*/
    value.textContent = repetitonOfId;}
-  else {}
+  else {/* ne rien faire, car si le DOM n'est pas completement chargé ne pas séléctionner le DOM*/}
 }}
-    /*console.log('il y a ' + qtty);*/
  }
 /*----------------appeler les fonctions à l'aide de onclick sur html----------*/
  function addProductToBucketClick(idOnButton){
@@ -204,40 +195,71 @@ function removeProductToBucketClick(idOnButton){
 /*-----------CALCULATEUR DE PRIX TOTAL, articles * quantités----------*/
 function totalPrice(){
   totalSum = 0;
+  /*outils de calcul */
   var resumeOrder = [];
   var arrayOfNames = [];
   var arrayOfPrices = [];
   var arrayOfQuantity = [];
+  /*éléments concernés*/
   var totalPrices = document.querySelector('.total');
   var productsNames = document.querySelectorAll('.name');
  var productsPrices = document.querySelectorAll('.price');
  var productsQuantity = document.querySelectorAll('.quantity');
- /*console.log(productsPrices);*/
+/*liste des noms des produits dans l'ordre d'affichage*/
  for (value of productsNames.values()){
   arrayOfNames.push(value.textContent);
 }
+/*liste des prix des produits dans l'ordre d'affichage*/
   for (value of productsPrices.values()){
     arrayOfPrices.push(value.textContent);
   }
+/*liste des quantités des produits dans l'ordre d'affichage*/
   for (value of productsQuantity.values()){
     arrayOfQuantity.push(value.textContent)
   }
+  /*ranger les trois listes dans un objet*/
   var multiplicateur = {};
   multiplicateur['name']= arrayOfNames;
    multiplicateur['price']= arrayOfPrices;
    multiplicateur['quantity']= arrayOfQuantity;
+   /*itérer sur l'objet pour lier les données de façon symétriques*/
     for (i in arrayOfPrices){
+      /*multiplier puis additionner pour obtenir le prix total*/
     totalSum += multiplicateur['price'][i] * multiplicateur['quantity'][i];
+    /*garder en mémoire nom/prix/quantité pour la page order*/
     resumeOrder.push(multiplicateur['name'][i],multiplicateur['price'][i]),multiplicateur['quantity'][i];
   };
- /*return Array.prototype.map.call(productsPrices, function(elem) { return elem.textContent; });*/
-  /*console.log(totalSum)*/
+  /*afficher le prix total*/
   totalPrices.innerHTML = totalSum;
+  /* informations de commandes pour la page order*/
   localStorage.setItem('resumeOrder',JSON.stringify(resumeOrder));
 }
+/*Enregistrer les données pour la requete POST*/
+function saveData(){
+  /*données de contact formulaire*/
+  var costumerFirstName = document.querySelector('#firstName');
+  var costumerLastName = document.querySelector('#lastName');
+  var costumerAddress = document.querySelector('#address');
+  var costumerCity = document.querySelector('#city');
+  var costumerEmail = document.querySelector('#email');
+  /*insérer dans un objet*/
+  contact = {
+    firstName: costumerFirstName.value,
+    lastName: costumerLastName.value,
+    address: costumerAddress.value,
+    city: costumerCity.value,
+    email: costumerEmail.value,
+  };
+  /* syntaxe pour la requête*/
+  products = inBucket;
+  let objetContact = {contact, products};
+  localStorage.setItem('orderData',JSON.stringify(objetContact));
+  /*console.log(JSON.stringify(objetContact));*/
+  /*redirection vers la page order*/
+  document.location.href="order.html" ;
+}
 
-
-console.log(localStorage);
+/*lancer le script*/
 getAllBucket();
 
 

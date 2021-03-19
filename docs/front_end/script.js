@@ -1,4 +1,4 @@
-/*DOM classe des cartes*/
+/*DOM classe des articles*/
 var productsPicturesNames = [];
 var productsPictures = [];
 
@@ -7,24 +7,14 @@ for(var i=0; i<5; i++){
   productsPicturesNames.push('.teddy_'+(i+1));
   productsPictures[i] = document.querySelector(productsPicturesNames[i]);
 };
-/*
-productsPictures[0].addEventListener('click', function(){
-  console.log('clické');
-});
-*/
-/*utilisé sur le onclick html*/
+
+/*fonction déclanchée sur le onclick html, permet de mémoriser sur quel produit l'on a cliqué */
 function getId(number)
 {
+/* séparer nom du produit et id produit*/
 const separateString = number.split('_');
-console.log(separateString);
-/*localStorage.clear();*/
+/*save id*/
 localStorage.setItem('productId',separateString[1]);
+/*save name*/
 localStorage.setItem(separateString[0],separateString[1]);
-console.log(localStorage);
 }
-
-console.log(productsPicturesNames);
-console.log(productsPictures);
-console.log(productsPictures[0]);
-
-  /**/
