@@ -17,7 +17,8 @@ function getOneProduct(product_id){
   fetch('http://localhost:3000/api/teddies/' + product_id)
   .then(async response => {
     data = await response.json()
-  .then(data => loadHTMLTable(data));
+      .then(data => { loadHTMLTable(data); });
+})}
   
     /*console.log(requestData);*/
     /*var path = requestData['imageUrl'];
@@ -27,7 +28,7 @@ function getOneProduct(product_id){
     description.textContent = requestData['description'];
     color1.textContent = requestData['colors'][0];	*/
     
-     })}
+
 
 
   function getAllBucket() {
@@ -57,22 +58,23 @@ function loadHTMLTable(data) {
       tableau.innerHTML = "<tr><td class='no-data' colspan='5'>No Data</td></tr>";
       return;}*/
 let tableauHtml = "";
+console.log(data);
 /*var path = requestData['imageUrl'];
 product.setAttribute("src", path);
 color1.textContent = requestData['colors'][0];*/
 /*data = param de la fn*/
- for (i in data){
+ 
       tableauHtml += "<tr>";
       /*tableauHtml += `<td><img class="little_picture" src='${data[i]['imageUrl']}'></td>`;*/
-      tableauHtml += `<td>${data[i]['name']}</td>`;
-      tableauHtml += `<td>${data[i]['price']}</td>`;
-      tableauHtml += `<td> Quantité <span class=quantity>${productCountBefore(data[i]['_id'])}</span>
+      tableauHtml += `<td>${data['name']}</td>`;
+      tableauHtml += `<td>${data['price']}</td>`;
+      tableauHtml += `<td> Quantité <span class=quantity>${productCountBefore(data['_id'])}</span>
       <button onclick=onclick="removeProductToBucketClick()" >-</button>
     <button onclick="addProductToBucketClick()" >+</button></td>`;
       tableauHtml += "</tr>";
- }
+ 
   /*convertit tout en string puis le rentre dans le DOM */
-  tableau.innerHTML = tableauHtml;
+  tableau.innerHTML += tableauHtml;
 }
 /*----------------COMPTER LE NOMBRE D ARTICLE DANS LE PANIER----------*/
 function productCountBefore(string_id){

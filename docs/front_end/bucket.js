@@ -7,8 +7,8 @@ var compteur = 0;
 var product = document.querySelector('.product');
 var id = localStorage.getItem('productId');
 /*formulaire*/
-var products = [id, '5beaa8bf1c9d440000a57d94'];
-let contact;
+let inBucket;
+let products;
 console.log(products);
 /*-----*/
 var title = document.querySelector('.title');
@@ -29,32 +29,12 @@ function saveData(){
     city: costumerCity.value,
     email: costumerEmail.value,
   };
+  products = inBucket;
   let objetContact = {contact, products};
+  localStorage.setItem('orderData',JSON.stringify(objetContact));
+
   console.log(JSON.stringify(objetContact));
-  saveOrder(objetContact);
-}
-
-
-
-function saveOrder(data){
-const requestOptions = {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify( data )};
-  fetch('http://localhost:3000/api/teddies/order', requestOptions)
-  .then(async response => {
-      const data = await response.json()
-  .then(data => localStorage.setItem('orderData',JSON.stringify(data))
-  );
-  // check for error response
-   if (!response.ok) {
-  // get error message from body or default to response status
-  const error = (data && data.message) || response.status;
-  return Promise.reject(error); }})
-  .catch(error => {
-  this.errorMessage = error;
-  console.error('There was an error!', error);});
-  document.location.href="http://127.0.0.1:5500/docs/front_end/order.html";
+  document.location.href="order.html" ;
 }
 
 function getOneProduct(product_id){
@@ -70,7 +50,7 @@ function getOneProduct(product_id){
 
 
 function getAllBucket() {
-  var inBucket = JSON.parse(localStorage.getItem('inBucket'));
+  inBucket = JSON.parse(localStorage.getItem('inBucket'));
   /*console.log(inBucket);*/
   /* récupérer les articles en exemplaire uniques en comparant deux array,
   possible avec includes, mais non compatible Internet Explorer*/
@@ -125,7 +105,7 @@ let tableauHtml = "";
    var memorisedId = data[i]['_id'];
       tableauHtml += "<tr>";
       tableauHtml += `<td><img class="little_picture" src='${data[i]['imageUrl']}'></td>`;
-      tableauHtml += `<td>${data[i]['name']}</td>`;
+      tableauHtml += `<td class='name'>${data[i]['name']}</td>`;
       tableauHtml += `<td class='price'>${data[i]['price']}</td>`;
       tableauHtml += `<td> Quantité <span id="Id${memorisedId}" class="quantity">${productCountBefore(memorisedId)}</span>
       <button id="${memorisedId}" onclick="removeProductToBucketClick(this.id);" >-</button>
@@ -224,12 +204,18 @@ function removeProductToBucketClick(idOnButton){
 /*-----------CALCULATEUR DE PRIX TOTAL, articles * quantités----------*/
 function totalPrice(){
   totalSum = 0;
+  var resumeOrder = [];
+  var arrayOfNames = [];
   var arrayOfPrices = [];
   var arrayOfQuantity = [];
   var totalPrices = document.querySelector('.total');
+  var productsNames = document.querySelectorAll('.name');
  var productsPrices = document.querySelectorAll('.price');
  var productsQuantity = document.querySelectorAll('.quantity');
  /*console.log(productsPrices);*/
+ for (value of productsNames.values()){
+  arrayOfNames.push(value.textContent);
+}
   for (value of productsPrices.values()){
     arrayOfPrices.push(value.textContent);
   }
@@ -237,14 +223,17 @@ function totalPrice(){
     arrayOfQuantity.push(value.textContent)
   }
   var multiplicateur = {};
+  multiplicateur['name']= arrayOfNames;
    multiplicateur['price']= arrayOfPrices;
    multiplicateur['quantity']= arrayOfQuantity;
     for (i in arrayOfPrices){
-    totalSum += multiplicateur['price'][i] * multiplicateur['quantity'][i]
+    totalSum += multiplicateur['price'][i] * multiplicateur['quantity'][i];
+    resumeOrder.push(multiplicateur['name'][i],multiplicateur['price'][i]),multiplicateur['quantity'][i];
   };
  /*return Array.prototype.map.call(productsPrices, function(elem) { return elem.textContent; });*/
   /*console.log(totalSum)*/
   totalPrices.innerHTML = totalSum;
+  localStorage.setItem('resumeOrder',JSON.stringify(resumeOrder));
 }
 
 
