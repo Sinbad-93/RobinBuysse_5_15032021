@@ -319,3 +319,36 @@ form > .btn_container {
 form > .btn_container > input{
     font-size: 25px;
 }
+
+/*-------------------ORDER.HTML-------------*/
+.order{
+    font-size: 20px;
+    text-align: start;
+    padding-left: 30px ;
+}
+.totalPrice{
+    font-size: 20px;
+    text-align: center;
+}
+.orderContainer {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    align-self: center;
+    padding-top: 60px ;
+    padding-bottom : 60px ;
+    border: black 2px solid;
+    grid-row-start : 1;
+    grid-row-end: 3 ;
+}
+h3{
+    text-align: center;
+    font-size: 30px;
+}
+.clean{
+    font-size: 15px;
+    background-color: greenyellow;
+    margin: auto;
+    
+}

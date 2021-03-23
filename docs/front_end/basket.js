@@ -8,7 +8,6 @@ var id = localStorage.getItem('productId');
 /*formulaire*/
 let inBasket;
 let products;
-console.log(products);
 /*-----*/
 /*récupérer elements du DOM*/
 var product = document.querySelector('.product');
@@ -227,12 +226,13 @@ function totalPrice(){
       /*multiplier puis additionner pour obtenir le prix total*/
     totalSum += multiplicateur['price'][i] * multiplicateur['quantity'][i];
     /*garder en mémoire nom/prix/quantité pour la page order*/
-    resumeOrder.push(multiplicateur['name'][i],multiplicateur['price'][i]),multiplicateur['quantity'][i];
+    resumeOrder.push(multiplicateur['name'][i],multiplicateur['price'][i],multiplicateur['quantity'][i]);
   };
   /*afficher le prix total*/
   totalPrices.innerHTML = totalSum;
   /* informations de commandes pour la page order*/
   localStorage.setItem('resumeOrder',JSON.stringify(resumeOrder));
+  console.log(resumeOrder);
 }
 /*Enregistrer les données pour la requete POST*/
 function saveData(){

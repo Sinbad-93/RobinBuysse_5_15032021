@@ -39,7 +39,7 @@ for (i in contact){
 costumerOrder.innerHTML +=   i + ' : ' + contact[i] + '<br>' ;
 }
 /*afficher id order */
-costumerOrder.innerHTML += '<br><strong>Numéro de commande</strong> : ' + orderId + '<br>';
+costumerOrder.innerHTML += '<br><strong>Command order</strong> : ' + orderId + '<br>';
 
 /*initialiser pour la somme des prix */
 var sumPrices = 0;
@@ -47,7 +47,7 @@ if (orderResume){
 /*afficher les données d'articles de commande + calculer le total*/
 for (i = 0; i < (orderResume.length-2); i +=3){
     costumerOrder.innerHTML +=   
-    ' <br> ' + 'produit ' + compteur + ' : ' 
+    ' <br> ' + 'product ' + numero + ' : ' 
     + orderResume[i] + ' ' 
     + '('+orderResume[i+1]+')' + '  '
     + 'quantity : '+ orderResume[i+2] ;
@@ -57,10 +57,11 @@ for (i = 0; i < (orderResume.length-2); i +=3){
     numero += 1;
     }
     /*afficher le total*/
-    totalPrice.innerHTML = 'Montant total de la commande : ' + sumPrices;
+    totalPrice.innerHTML = 'Final price order : ' + sumPrices + ' Y';
 
   }}
 /*lancer le script*/
 saveOrder(objetContact);
 /*réinitialiser le magasin*/
-/*localStorage.clear(); *******************/
+function cleanBasket(){
+localStorage.clear();}
