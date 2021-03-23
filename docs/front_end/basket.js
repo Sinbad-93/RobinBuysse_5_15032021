@@ -6,7 +6,7 @@ var allData = [];
 var compteur = 0;
 var id = localStorage.getItem('productId');
 /*formulaire*/
-let inBucket;
+let inBasket;
 let products;
 console.log(products);
 /*-----*/
@@ -31,20 +31,20 @@ function getOneProduct(product_id){
      })}
 
 /*récuperer le contenu du panier pour pouvoir afficher les données*/
-function getAllBucket() {
+function getAllBasket() {
   /*REF01 récuperer l'etat du panier*/
-  inBucket = JSON.parse(localStorage.getItem('inBucket'));
+  inBasket = JSON.parse(localStorage.getItem('inBasket'));
   /*gérer le cas du panier vide*/
-  if (inBucket.length === 0){
-    loadHTMLTable(inBucket);
+  if (inBasket.length === 0){
+    loadHTMLTable(inBasket);
   }
   /* récupérer les articles en exemplaire uniques en comparant deux array,
   également possible et plus simple avec includes, mais non compatible Internet Explorer*/
-  for (i in inBucket){
+  for (i in inBasket){
     /*si le produit est déjà dans la liste, ne rien faire*/
-    if (differentsProducts.indexOf(inBucket[i]) != -1){}
+    if (differentsProducts.indexOf(inBasket[i]) != -1){}
     /*sinon insérer le produit en exemplaire unique*/
-    else {differentsProducts.push(inBucket[i])}
+    else {differentsProducts.push(inBasket[i])}
     }
     /*boucler sur l'API les Id de produits du panier*/
     for (i in differentsProducts){
@@ -101,8 +101,8 @@ let tableauHtml = "";
       tableauHtml += `<td class='name'>${data[i]['name']}</td>`;
       tableauHtml += `<td class='price'>${data[i]['price']}</td>`;
       tableauHtml += `<td> Quantité <span id="Id${memorisedId}" class="quantity">${productCountBefore(memorisedId)}</span>
-      <button id="${memorisedId}" onclick="removeProductToBucketClick(this.id);" >-</button>
-    <button id="${memorisedId}" onclick="addProductToBucketClick(this.id);" >+</button></td>`;
+      <button id="${memorisedId}" onclick="removeProductToBasketClick(this.id);" >-</button>
+    <button id="${memorisedId}" onclick="addProductToBasketClick(this.id);" >+</button></td>`;
       tableauHtml += "</tr>";
  }
   /*insérer la variable dans un élément du DOM pour afficher données */
@@ -114,10 +114,10 @@ let tableauHtml = "";
 /*----------------????? INUTILES LES DEUX ?????----------*/
 function productCountBefore(string_id){
   /*fonction similaire à celle dans product.js*/
-  var inBucket = JSON.parse(localStorage.getItem('inBucket'));
+  var inBasket = JSON.parse(localStorage.getItem('inBasket'));
   var repetitonOfId = 0;
-  for (i in inBucket){ 
-    if (inBucket[i]=== string_id){
+  for (i in inBasket){ 
+    if (inBasket[i]=== string_id){
       repetitonOfId += 1;
     }
   }
@@ -130,13 +130,13 @@ function quantityCount(data){
 }}
 
 /*-------------------AJOUTER UN ARTICLE DANS LE PANIER----------------*/
-function addProductToBucketById(productAdded){
+function addProductToBasketById(productAdded){
   /*fonction déjà commenté dans product.js*/
-   var inBucket = JSON.parse(localStorage.getItem('inBucket'));
-   inBucket.push(productAdded);
-   localStorage.setItem('inBucket', JSON.stringify(inBucket));
+   var inBasket = JSON.parse(localStorage.getItem('inBasket'));
+   inBasket.push(productAdded);
+   localStorage.setItem('inBasket', JSON.stringify(inBasket));
 
-   /*inBucket =  JSON.parse(localStorage.getItem('inBucket'));*/
+   /*inBasket =  JSON.parse(localStorage.getItem('inBasket'));*/
 
    productCount(productAdded);
 
@@ -145,17 +145,17 @@ function addProductToBucketById(productAdded){
  ;}
  
  /*---------------ENLEVER UN ARTICLE DU PANIER--------------------*/
- function removeProductToBucketById(productAdded){
+ function removeProductToBasketById(productAdded){
     /*fonction déjà commenté dans product.js*/
-   var inBucket = JSON.parse(localStorage.getItem('inBucket'));
-   var position = inBucket.indexOf(productAdded);
+   var inBasket = JSON.parse(localStorage.getItem('inBasket'));
+   var position = inBasket.indexOf(productAdded);
    if (position > -1 ){
-     var removedItem = inBucket.splice(position, 1);
+     var removedItem = inBasket.splice(position, 1);
    }
    else { alert('quantité déjà à zéro dans votre panier')};
-   localStorage.setItem('inBucket', JSON.stringify(inBucket));
+   localStorage.setItem('inBasket', JSON.stringify(inBasket));
 
-   /*inBucket =  JSON.parse(localStorage.getItem('inBucket'));*/
+   /*inBasket =  JSON.parse(localStorage.getItem('inBasket'));*/
 
    productCount(productAdded);
    totalPrice();
@@ -163,10 +163,10 @@ function addProductToBucketById(productAdded){
  /*----------------COMPTER LE NOMBRE D ARTICLE DANS LE PANIER----------*/
  function productCount(string_id){
    /*similaire à product.js*/
-   var inBucket = JSON.parse(localStorage.getItem('inBucket'));
+   var inBasket = JSON.parse(localStorage.getItem('inBasket'));
    var repetitonOfId = 0;
-   for (i in inBucket){
-     if (inBucket[i]=== string_id){
+   for (i in inBasket){
+     if (inBasket[i]=== string_id){
        repetitonOfId += 1;
      }
    }
@@ -185,11 +185,11 @@ function addProductToBucketById(productAdded){
 }}
  }
 /*----------------appeler les fonctions à l'aide de onclick sur html----------*/
- function addProductToBucketClick(idOnButton){
-  addProductToBucketById(idOnButton)
+ function addProductToBasketClick(idOnButton){
+  addProductToBasketById(idOnButton)
 }
-function removeProductToBucketClick(idOnButton){
-  removeProductToBucketById(idOnButton)
+function removeProductToBasketClick(idOnButton){
+  removeProductToBasketById(idOnButton)
 }
 
 /*-----------CALCULATEUR DE PRIX TOTAL, articles * quantités----------*/
@@ -251,7 +251,7 @@ function saveData(){
     email: costumerEmail.value,
   };
   /* syntaxe pour la requête*/
-  products = inBucket;
+  products = inBasket;
   let objetContact = {contact, products};
   localStorage.setItem('orderData',JSON.stringify(objetContact));
   /*console.log(JSON.stringify(objetContact));*/
@@ -260,7 +260,7 @@ function saveData(){
 }
 
 /*lancer le script*/
-getAllBucket();
+getAllBasket();
 
 
 /*-------------BROUILLON------------------*/

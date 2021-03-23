@@ -6,7 +6,7 @@ var description = document.querySelector('.description');
 var color1 = document.querySelector('.color1');
 var color2 = document.querySelector('.color2');
 var color3 = document.querySelector('.color3');
-var addToBucket = document.querySelector('.addToBucket');
+var addToBasket = document.querySelector('.addToBasket');
 var quantity = document.querySelector('.quantity');
 /*initialiser en local des array qui manipuleront des données dans les fonctions*/
 var savedProducts = [];
@@ -39,43 +39,43 @@ function isKeyExists(obj,key){
   }
 
 /*vérifier si le panier existe, sinon l'initialiser*/
-function initialiseBucket() {
- if (isKeyExists(localStorage,'inBucket') === false ){
+function initialiseBasket() {
+ if (isKeyExists(localStorage,'inBasket') === false ){
   var product_id = [];
-  localStorage.setItem('inBucket', JSON.stringify(product_id));
+  localStorage.setItem('inBasket', JSON.stringify(product_id));
  }
 }
 
 /*-------------------AJOUTER UN ARTICLE DANS LE PANIER----------------*/
-function addProductToBucket(productAdded){
+function addProductToBasket(productAdded){
   /*récupérer le contenu du panier avec une variable REF01 */
-  var inBucket = JSON.parse(localStorage.getItem('inBucket'));
+  var inBasket = JSON.parse(localStorage.getItem('inBasket'));
   /*ajouter le nouveau produit*/
-  inBucket.push(productAdded);
+  inBasket.push(productAdded);
   /*remettre les produits dans la database*/
-  localStorage.setItem('inBucket', JSON.stringify(inBucket));
+  localStorage.setItem('inBasket', JSON.stringify(inBasket));
 
-  /*inBucket =  JSON.parse(localStorage.getItem('inBucket'));*/
+  /*inBasket =  JSON.parse(localStorage.getItem('inBasket'));*/
 
   /*compter le nombre d'exemplaire du produit dans le panier*/
   productCount(productAdded);
 }
 
 /*---------------ENLEVER UN ARTICLE DU PANIER--------------------*/
-function removeProductToBucket(productAdded){
+function removeProductToBasket(productAdded){
   /*REF01*/
-  var inBucket = JSON.parse(localStorage.getItem('inBucket'));
+  var inBasket = JSON.parse(localStorage.getItem('inBasket'));
   /*récuperer le dernier exemplaire ajouté*/
-  var position = inBucket.indexOf(productAdded);
+  var position = inBasket.indexOf(productAdded);
   /*supprimer l'exemplaire, si déjà 0, notifier*/
   if (position > -1 ){
-    var removedItem = inBucket.splice(position, 1);
+    var removedItem = inBasket.splice(position, 1);
   }
   else { alert('quantité déjà à zéro dans votre panier')};
   /*retourner le nouveau panier dans la database*/
-  localStorage.setItem('inBucket', JSON.stringify(inBucket));
+  localStorage.setItem('inBasket', JSON.stringify(inBasket));
 
-  /*inBucket =  JSON.parse(localStorage.getItem('inBucket'));*/
+  /*inBasket =  JSON.parse(localStorage.getItem('inBasket'));*/
   
   /*compter le nombre d'exemplaire du produit dans le panier*/
   productCount(productAdded);
@@ -83,12 +83,12 @@ function removeProductToBucket(productAdded){
 /*----------------COMPTER LE NOMBRE D ARTICLE DANS LE PANIER----------*/
 function productCount(string_id){
   /*REF01*/
-  var inBucket = JSON.parse(localStorage.getItem('inBucket'));
+  var inBasket = JSON.parse(localStorage.getItem('inBasket'));
   /*compteur d'id identiques*/
   var repetitonOfId = 0;
-  for (i in inBucket){ 
+  for (i in inBasket){ 
     /*comparer tous les id du panier avec notre id produit*/
-    if (inBucket[i]=== string_id){
+    if (inBasket[i]=== string_id){
       repetitonOfId += 1;
     }
   }
@@ -97,16 +97,16 @@ function productCount(string_id){
 }
 
 /*AJOUTER ou ENLEVER un article du panier grace au click, relié au DOM onclick*/
-function addProductToBucketClick(){
-  addProductToBucket(id)
+function addProductToBasketClick(){
+  addProductToBasket(id)
 }
-function removeProductToBucketClick(){
-  removeProductToBucket(id)
+function removeProductToBasketClick(){
+  removeProductToBasket(id)
 }
 /*lancer le script*/  
 getOneProduct(id);
 productCount(id);
-initialiseBucket();
+initialiseBasket();
 
 
 

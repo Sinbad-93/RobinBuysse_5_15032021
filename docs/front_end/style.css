@@ -1,11 +1,12 @@
 body{
     display: grid;
-    grid-template-rows: 20% 80% 20%;
+    /*grid-template-rows: 20% 80% 20%;*/
     grid-template-areas: 
     "header"
     "main"
     "footer";
     row-gap: 5%;
+
 }
 
 header{
@@ -40,13 +41,34 @@ main{
     grid-area: main;
     min-height: 600px;
     display: grid;
-    grid-template-columns: 1fr 8fr ;
-}
-.sidebar{
-    background-color: cornflowerblue;
-    width: 170px;
+    grid-template-columns: 1fr 20fr ;
 }
 
+.sidebar{
+    display: flex;
+    justify-content: flex-end;
+    background-color: darkblue;
+    width: 140px;
+    grid-row-start: 1;
+    grid-row-end: 3;
+    margin-right: 25px;
+}
+.showHide {
+    align-self: center;
+    margin-right: -20px;
+    height: 80px;
+    width: 45px;
+    z-index: 2;
+}
+.optionnal {
+position: absolute;
+align-self: center;
+color: white;
+font-size: 23px;
+white-space: nowrap;
+left: -190px;
+transform: rotate(90deg);
+}
 footer{
     grid-area: footer;
     height: 150px;
@@ -74,12 +96,21 @@ footer >div> span{
     
 }
 .picture{
-    height: 300px;
+    display: grid;
+    height:350px;
     width:400px;
     border: 3px black solid;
     overflow: hidden;
     
+    
 }
+.picture > p {
+    display: flex;
+    width: 400px;
+    justify-content: space-between;
+    margin: 0;
+}
+
 img{
     height: 300px;
 }
@@ -92,7 +123,79 @@ img{
     background-color: rgb(117, 201, 204);
     border: solid 3px black;
 }
-/*------------BUCKET.HTML---------------*/
+.main_product{
+    grid-area: main;
+    min-height: 600px;
+    display: grid;
+    grid-template-columns: 1fr 8fr ;
+}
+#h2_product{
+    color: black;
+    font-size: 35px;
+   
+}
+.banner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    font-size: 25px;
+
+}
+.banner > h3 {
+    color: black;
+    margin: auto;
+    text-align: center;
+    width: 100%;
+}
+/*------------BASKET.HTML---------------*/
+.main_basket{
+    font-size: 21px;
+}
+
+.little_picture{
+    height: 120px;
+    width: 150px;
+    vertical-align: bottom;
+}
+
+table {
+    display: grid;
+    width: auto;
+    margin: 0 20px 0 20px;
+    
+}
+tbody{
+    display: grid;
+    grid-row-gap: 20px;
+    
+}
+
+tbody > tr {
+    display: grid;
+    grid-template-columns: 5fr 1fr 1fr 1fr;
+    border: 1px solid;
+}
+tbody > tr > td { 
+    align-self: center;
+    padding: 0;
+    
+}
+thead {
+    height: 50px;
+}
+thead > tr{
+        display: grid;
+        grid-template-columns: 5fr 1fr 1fr 1fr;
+}
+
+thead > tr > th {
+    text-align: start;
+}
+
+.basket_total{
+    text-align: end;
+    margin-right: 25px;
+}
 .form_container{
     height: 350px;
     display: flex;
@@ -105,6 +208,19 @@ form{
     justify-content: space-between;
 }
 
-.little_picture{
-    width: 200px;
+/*phrase annonce formulaire*/
+.form_info{
+    text-align: center;
+    
+}
+form > div {
+    width: 300px;
+    display: flex;
+    justify-content: space-between;
+}
+form > .btn_container {
+    justify-content: center;
+}
+form > .btn_container > input{
+    font-size: 25px;
 }

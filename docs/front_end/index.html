@@ -7,18 +7,25 @@
   
 </head>
 <body>
-  <header> <h1>Sweets Bears</h1> <h2>The lasts makers of handmade Teddy bears originals.  </h2>
-    <div class="link_container"><a href="index.html">Home</a><a href="bucket.html">Bucket</a></div>
+  <header> <h1>Sweets Bears</h1> <h2>The lasts handmade makers of Teddy bears originals.  </h2>
+    <div class="link_container"><a href="index.html">Home</a><a href="basket.html">Basket</a></div>
   </header>
-  <main>
+  <main >
   <div class="sidebar">
+    <button class="showHide" onclick="showHideSideBar();">Hide</button>
+    <span class="optionnal">Optionnal sidebar for filters, advertisement, promotions </span>
   </div>
 <div class="picture_container">
-  <div class="picture"><a href="product.html"><img id="teddy1_5be9c8541c9d440000665243" class="teddy_1" onclick="getId(this.id);" src="../images/teddy_1.jpg" alt=""></a></div>
-  <div class="picture"><a href="product.html"><img id="teddy2_5beaa8bf1c9d440000a57d94" class="teddy_2" onclick="getId(this.id);" src="../images/teddy_2.jpg" alt=""></a></div>
-  <div class="picture"><a href="product.html"><img id="teddy3_5beaaa8f1c9d440000a57d95" class="teddy_3" onclick="getId(this.id);" src="../images/teddy_3.jpg" alt=""></a></div>
-  <div class="picture"><a href="product.html"><img id="teddy4_5beaabe91c9d440000a57d96" class="teddy_4" onclick="getId(this.id);" src="../images/teddy_4.jpg" alt=""></a></div>
-  <div class="picture"><a href="product.html"><img id="teddy5_5beaacd41c9d440000a57d97" class="teddy_5" onclick="getId(this.id);" src="../images/teddy_5.jpg" alt=""></a></div>
+  <div class="picture"><a href="product.html"><img id="teddy1_5be9c8541c9d440000665243" class="teddy_1" onclick="getId(this.id);" src="../images/teddy_1.jpg" alt=""></a>
+    <p>Norbert <span>2900 ¥</span></p><!--p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p!--></div>
+  <div class="picture"><a href="product.html"><img id="teddy2_5beaa8bf1c9d440000a57d94" class="teddy_2" onclick="getId(this.id);" src="../images/teddy_2.jpg" alt=""></a>
+    <p>Arnold <span>3900 ¥</span></p><!--p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p!--></div>
+  <div class="picture"><a href="product.html"><img id="teddy3_5beaaa8f1c9d440000a57d95" class="teddy_3" onclick="getId(this.id);" src="../images/teddy_3.jpg" alt=""></a>
+    <p>Lenny and Carl <span>5900 ¥</span></p><!--p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p!--></div>
+  <div class="picture"><a href="product.html"><img id="teddy4_5beaabe91c9d440000a57d96" class="teddy_4" onclick="getId(this.id);" src="../images/teddy_4.jpg" alt=""></a>
+    <p>Gustav <span>4500 ¥</span></p><!--p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p!--></div>
+  <div class="picture"><a href="product.html"><img id="teddy5_5beaacd41c9d440000a57d97" class="teddy_5" onclick="getId(this.id);" src="../images/teddy_5.jpg" alt=""></a>
+    <p>Garfunkel <span>5500 ¥</span></p><!--p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p!--></div>
 </div>
 </main>
 
@@ -31,4 +38,5 @@
 
 
 <script src="script.js"></script>
+<script src="animation.js"></script>
 </html>

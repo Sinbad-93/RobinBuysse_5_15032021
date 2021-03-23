@@ -8,13 +8,17 @@
 </head>
 <body>
   
-  <header> <h1>Sweets Bears</h1> <h2>The lasts makers of handmade Teddy bears originals.  </h2>
-    <div class="link_container"><a href="index.html">Home</a><a href="bucket.html">Bucket</a></div>
-  </header><main>
-    <div class="sidebar"></div>
+  <header> <h1>Sweets Bears</h1> <h2>The lasts handmade makers of Teddy bears originals.  </h2>
+    <div class="link_container"><a href="index.html">Home</a><a href="basket.html">Basket</a></div>
+  </header><main class= main_product>
+    <div class="sidebar">
+      <button class="showHide" onclick="showHideSideBar();">Hide</button>
+      <span class="optionnal">Optionnal sidebar for filters, advertisement, promotions </span>
+    </div>
   <div class="picture_container">
     <div class="picture"><a><img id="" class="product" src="" alt=""></a></div>
-    <div><h1 class='title'>name</h1>
+    <div><h2 id='h2_product' class='title'>name</h2>
+      <p>High quality tissu, resistant coutures</p>
     <span class='price'>price</span>
     <p class='description'>description</p>
     <ul>
@@ -22,16 +26,24 @@
       <li class='color2'>color2</li>
       <li class='color3'>color3</li>
     </ul>
-  <button class="addToBucket" onclick="addProductToBucketClick()">Ajouter au panier</button>
+  <button class="addToBasket" onclick="addProductToBasketClick()">Add to basket</button>
   <p>Quantité actuelle dans le panier : <span class="quantity">0</span> 
-    <button onclick="removeProductToBucketClick()">-</button>
-    <button onclick="addProductToBucketClick()">+</button></p>
-  <a href="./bucket.html">voir le panier</a>
+    <button onclick="removeProductToBasketClick()">-</button>
+    <button onclick="addProductToBasketClick()">+</button></p>
+  <a href="./basket.html">see basket</a>
   </div>
-  </div></main>
+  </div>
+  <div class="banner"><h3>Our engagements</h3>
+    <span>Security payment</span>
+    <span>satisfait ou remboursé, retour gratuit</span>
+    <span>Livraison express </span></div>
+</main>
 
-  <footer></footer>
+  <footer>
+    <div><span>Contact us</span><span>Partners</span><span>Ecology & Fair trade</span></div>
+  </footer>
 </body>
 
 <script src="product.js"></script>
+<script src="animation.js"></script>
 </html>
