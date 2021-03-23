@@ -100,7 +100,7 @@ let tableauHtml = "";
       tableauHtml += `<td><img class="little_picture" src='${data[i]['imageUrl']}'></td>`;
       tableauHtml += `<td class='name'>${data[i]['name']}</td>`;
       tableauHtml += `<td class='price'>${data[i]['price']}</td>`;
-      tableauHtml += `<td> Quantité <span id="Id${memorisedId}" class="quantity">${productCountBefore(memorisedId)}</span>
+      tableauHtml += `<td> <span id="Id${memorisedId}" class="quantity">${productCountBefore(memorisedId)}</span>
       <button id="${memorisedId}" onclick="removeProductToBasketClick(this.id);" >-</button>
     <button id="${memorisedId}" onclick="addProductToBasketClick(this.id);" >+</button></td>`;
       tableauHtml += "</tr>";

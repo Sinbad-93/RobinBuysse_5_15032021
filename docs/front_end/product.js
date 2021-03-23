@@ -1,5 +1,4 @@
 /* relier des variables aux éléments au DOM*/
-var product = document.querySelector('.product');
 var title = document.querySelector('.title');
 var price = document.querySelector('.price');
 var description = document.querySelector('.description');
@@ -8,6 +7,30 @@ var color2 = document.querySelector('.color2');
 var color3 = document.querySelector('.color3');
 var addToBasket = document.querySelector('.addToBasket');
 var quantity = document.querySelector('.quantity');
+var loupe = document.getElementById('Loupe');
+var product = document.querySelector('.picture');
+var loupeContainer = product;
+var zoom = 2;
+var activeZoom = false;
+loupeContainer.addEventListener('mousemove',logKey);
+loupe.style.display = "none";
+function onOffZoom(){
+  if(activeZoom === false){
+  activeZoom = true;
+  loupe.style.display = "block";
+  product.style.cursor = 'none';}
+  else if(activeZoom === true){
+    activeZoom = false;
+    loupe.style.display = "none";
+    product.style.cursor = 'initial';}
+}
+function logKey(){
+  if (activeZoom === true){
+  loupe.style.left = event.clientX - 260 + 'px';
+  loupe.style.top = event.clientY - 290 +'px';
+  loupe.style.backgroundSize = (500*zoom) + "px";
+  loupe.style.backgroundPosition = 'left ' + (-loupe.offsetLeft*zoom-50) + 'px ' + 'top ' + (-loupe.offsetTop*zoom-50) + "px";
+}}
 /*initialiser en local des array qui manipuleront des données dans les fonctions*/
 var savedProducts = [];
 /*récupérer l'id du produit*/
@@ -24,7 +47,9 @@ const data = await response.json()
 /*afficher les données sur le DOM*/
 function showData(data){
   var path = data['imageUrl'];
-  product.setAttribute("src", path);
+  /*product.setAttribute("src", path);*/
+  product.style.backgroundImage = 'url('+path+')';
+  loupe.style.backgroundImage = 'url('+path+')';
   title.textContent = data['name'];
   price.textContent = data['price'];
   description.textContent = data['description'];
