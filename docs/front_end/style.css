@@ -294,16 +294,23 @@ thead > tr > th {
 .basket_total{
     text-align: end;
     margin-right: 25px;
+    padding-bottom: 20px;
+    border-bottom: darkblue 2px solid;
 }
 .form_container{
-    height: 350px;
-    display: flex;
-    justify-content: center;
-}
+    height: 500px;
+    display: grid;
+    margin-top: 80px;
+    grid-template-columns: 1.5fr 1fr ;
+    column-gap: 10px;
 
+}
 form{
+    justify-self: end;
     display: flex;
     flex-direction: column;
+    border: black 2px solid;
+    padding: 20px;
     justify-content: space-between;
 }
 
@@ -313,18 +320,65 @@ form{
     
 }
 form > div {
-    width: 300px;
+    width: 360px;
     display: flex;
     justify-content: space-between;
 }
 form > .btn_container {
+    margin: 0 auto 0 auto;
     justify-content: center;
 }
 form > .btn_container > input{
     font-size: 25px;
+    width: 100px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+input{
+    width: 250px;
+    outline: none;
+    border: grey 2px solid;
+}
+input:required {
+    background-size:5%;
+    background-image: url('../images/asterisk.png');
+    background-repeat: no-repeat;
+    background-position: 98% center;
+}
+input:focus:invalid {
+    border: red 2px solid;
+    box-shadow: 1px 2px 7px 2px red;
+}
+input:focus:valid{
+    border: green 2px solid ;
+    box-shadow: 1px 2px 7px 2px green;
+}
+input:valid{
+    background-image: none;
+}
+.formMessage{
+    justify-self: center;
+    right: 20px;
+    width: 400px;  
+}
+.help_btn{
+    display: block;
+    cursor: pointer;
+    margin: auto;
+    height: 50px;
+    width: 200px;
+    margin-top: 40px;
+    background-color: rgb(143, 196, 143);
 }
 
-/*-------------------ORDER.HTML-------------*/
+.help_message{
+    border: 2px black solid;
+    padding: 20px;
+    opacity:0;
+    background-color: rgb(143, 196, 143);
+}
+
+/*-------------ORDER.HTML-------------*/
 .order{
     font-size: 20px;
     text-align: start;

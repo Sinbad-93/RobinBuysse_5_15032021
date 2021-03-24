@@ -15,7 +15,17 @@ var title = document.querySelector('.title');
 var price = document.querySelector('.price');
 var description = document.querySelector('.description');
 var color1 = document.querySelector('.color1');
+var helpBtn = document.querySelector('.help_btn');
+var helpMessage = document.querySelector('.help_message');
 
+helpBtn.addEventListener('click', function(){
+  if (helpMessage.style.opacity === ''){
+  helpMessage.style.opacity = '1';
+  helpBtn.style.opacity = '0.5';}
+  else if (helpMessage.style.opacity === '1'){
+    helpMessage.style.opacity = '';
+    helpBtn.style.opacity = '1';}
+})
 /*récuperer un produit en fonction de son id, graçe à l'api*/
 function getOneProduct(product_id){
   let data;
