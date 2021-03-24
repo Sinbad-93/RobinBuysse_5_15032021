@@ -1,4 +1,5 @@
 /*vérifier les données de formulaires*/
+/*inutile graçe à HTML 5 pattern ? */
 var fisrtNameForm = document.forms['Form_id'].elements['firstname'];
 var lastNameForm = document.forms['Form_id'].elements['lastname'];
 var addressForm = document.forms['Form_id'].elements['address'];

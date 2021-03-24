@@ -19,11 +19,11 @@
       <button class="showHide" onclick="showHideSideBar();">⇦</button>
       <span class="optionnal">Optionnal sidebar for filters, advertisement, promotions </span>
     </div>
-  <div class="picture_container">
+  <div id="picture_container_productpage" class="picture_container">
     <div id="picture_productpage" class="picture"><div id="Loupe"></div>
     <button class="zoom" onclick="onOffZoom()"><i class="fas fa-search"></i>Zoom on/off</button></div>
     <div class='product_infos'><h2 id='h2_product' class='title'>name</h2>
-    <span class='price'>price</span> ¥
+    <span class='price'>price</span>
     <p class='description'>description</p>
     <label for="pet-select">Choose a color :</label>
     <select name="color" id="color-select">
@@ -31,11 +31,11 @@
         <option value=""class='color2'>color2</option>
         <option value=""class='color3'>color3</option>
     </select>
-    <p>High quality tissu, resistant coutures.</p>
+    <p class="little_banner">High quality tissu, resistant coutures.</p>
     <p>(Put you're mouse on picture for zoom.)</p>
   </div>
   <div class='basketDiv'><button class="addToBasket" onclick="addProductToBasketClick()">Add to basket</button>
-    <p>Current quantity :  <br>
+    <p> <span class="info_quantity">Current quantity :</span>   <br>
       <button class="btn-quantity" onclick="removeProductToBasketClick()">-</button>
       <span class="quantity">0</span>
       <button class="btn-quantity"onclick="addProductToBasketClick()">+</button></p>

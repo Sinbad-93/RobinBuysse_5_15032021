@@ -51,7 +51,7 @@ function showData(data){
   product.style.backgroundImage = 'url('+path+')';
   loupe.style.backgroundImage = 'url('+path+')';
   title.textContent = data['name'];
-  price.textContent = data['price'];
+  price.textContent = data['price'] + ' ¥';
   description.textContent = data['description'];
   color1.textContent = data['colors'][0];
   color2.textContent = data['colors'][1];
