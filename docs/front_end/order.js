@@ -57,7 +57,7 @@ for (i = 0; i < (orderResume.length-2); i +=3){
     numero += 1;
     }
     /*afficher le total*/
-    totalPrice.innerHTML = 'Final price order : ' + sumPrices + ' Y';
+    totalPrice.innerHTML = 'Final price order : ' + sumPrices + ' ¥';
 
   }}
 /*lancer le script*/
