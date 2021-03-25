@@ -1,3 +1,4 @@
+/* init variable*/
 let requestData;
 var allData = [];
 var differentsProducts = [];
@@ -18,14 +19,7 @@ var color1 = document.querySelector('.color1');
 var helpBtn = document.querySelector('.help_btn');
 var helpMessage = document.querySelector('.help_message');
 
-helpBtn.addEventListener('click', function(){
-  if (helpMessage.style.opacity === ''){
-  helpMessage.style.opacity = '1';
-  helpBtn.style.opacity = '0.5';}
-  else if (helpMessage.style.opacity === '1'){
-    helpMessage.style.opacity = '';
-    helpBtn.style.opacity = '1';}
-})
+
 /*récuperer un produit en fonction de son id, graçe à l'api*/
 function getOneProduct(product_id){
   let data;
@@ -80,7 +74,7 @@ dataWatch = {
 dataWatch.registerListener(function(value) {
   if (value.length === differentsProducts.length){ 
     /*console.log('les données sont chargées');*/
-
+    /* A SUPPRIMER*/
     /*compter les quantités d'articles*/
     /*quantityCount(allData);*/
 
@@ -120,7 +114,7 @@ let tableauHtml = "";
   tableau.insertAdjacentHTML("afterbegin", tableauHtml);*/
 }
 
-/*----------------????? INUTILES LES DEUX ?????----------*/
+/*----------------Afficher les quantités au chargement du DOM----------*/
 function productCountBefore(string_id){
   /*fonction similaire à celle dans product.js*/
   var inBasket = JSON.parse(localStorage.getItem('inBasket'));
@@ -133,10 +127,11 @@ function productCountBefore(string_id){
   /*actualiser les quantités*/
   return repetitonOfId;
 }
-function quantityCount(data){
+/* A SUPPRIMER*/
+/*function quantityCount(data){
   for (i in data){
     productCountBefore(data[i])
-}}
+}}*/
 
 /*-------------------AJOUTER UN ARTICLE DANS LE PANIER----------------*/
 function addProductToBasketById(productAdded){
@@ -169,7 +164,8 @@ function addProductToBasketById(productAdded){
    productCount(productAdded);
    totalPrice();
  }
- /*----------------COMPTER LE NOMBRE D ARTICLE DANS LE PANIER----------*/
+ /*-COMPTER LE NOMBRE D ARTICLE DANS LE PANIER POUR ACTUALISER SUR LA PAGE, 
+ APRES CHARGEMENT DU DOM----------*/
  function productCount(string_id){
    /*similaire à product.js*/
    var inBasket = JSON.parse(localStorage.getItem('inBasket'));
@@ -268,7 +264,17 @@ function saveData(){
   /*redirection vers la page order*/
   document.location.href="order.html" ;
 }
+/* bouton d'aide au formulaire, afficher/cacher texte*/
+helpBtn.addEventListener('click', function(){
+  if (helpMessage.style.opacity === ''){
+  helpMessage.style.opacity = '1';
+  helpBtn.style.opacity = '0.5';}
+  else if (helpMessage.style.opacity === '1'){
+    helpMessage.style.opacity = '';
+    helpBtn.style.opacity = '1';}
+})
 
+/*GLOBAL*/
 /*lancer le script*/
 getAllBasket();
 

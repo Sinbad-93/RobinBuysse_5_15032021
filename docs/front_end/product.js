@@ -9,28 +9,7 @@ var addToBasket = document.querySelector('.addToBasket');
 var quantity = document.querySelector('.quantity');
 var loupe = document.getElementById('Loupe');
 var product = document.querySelector('.picture');
-var loupeContainer = product;
-var zoom = 2;
-var activeZoom = false;
-loupeContainer.addEventListener('mousemove',logKey);
-loupe.style.display = "none";
-function onOffZoom(){
-  if(activeZoom === false){
-  activeZoom = true;
-  loupe.style.display = "block";
-  product.style.cursor = 'none';}
-  else if(activeZoom === true){
-    activeZoom = false;
-    loupe.style.display = "none";
-    product.style.cursor = 'initial';}
-}
-function logKey(){
-  if (activeZoom === true){
-  loupe.style.left = event.clientX - 260 + 'px';
-  loupe.style.top = event.clientY - 290 +'px';
-  loupe.style.backgroundSize = (500*zoom) + "px";
-  loupe.style.backgroundPosition = 'left ' + (-loupe.offsetLeft*zoom-50) + 'px ' + 'top ' + (-loupe.offsetTop*zoom-50) + "px";
-}}
+
 /*initialiser en local des array qui manipuleront des données dans les fonctions*/
 var savedProducts = [];
 /*récupérer l'id du produit*/
@@ -128,6 +107,39 @@ function addProductToBasketClick(){
 function removeProductToBasketClick(){
   removeProductToBasket(id)
 }
+
+/*------------FONCTION LOUPE POUR ZOOMER SUR IMAGE ------------------*/
+/* associer un autre nom pour une meilleur lisibilité*/
+var loupeContainer = product;
+/* rapport de zoom *2 */
+var zoom = 2;
+/* variable pour activer /desactiver le zoom*/
+var activeZoom = false;
+/* ecouter le passage de la souris sur la photo*/
+loupeContainer.addEventListener('mousemove',logKey);
+/*par défaut désactivée*/
+loupe.style.display = "none";
+/* fonction pour créer la loupe sur les photos*/
+function logKey(){
+  if (activeZoom === true){
+  loupe.style.left = event.clientX - 260 + 'px';
+  loupe.style.top = event.clientY - 290 +'px';
+  loupe.style.backgroundSize = (500*zoom) + "px";
+  loupe.style.backgroundPosition = 'left ' + (-loupe.offsetLeft*zoom-50) + 'px ' + 'top ' + (-loupe.offsetTop*zoom-50) + "px";
+}}
+/* activer desactiver loupe au click*/
+function onOffZoom(){
+  if(activeZoom === false){
+  activeZoom = true;
+  loupe.style.display = "block";
+  product.style.cursor = 'none';}
+  else if(activeZoom === true){
+    activeZoom = false;
+    loupe.style.display = "none";
+    product.style.cursor = 'initial';}
+}
+
+/*GLOBAL*/
 /*lancer le script*/  
 getOneProduct(id);
 productCount(id);

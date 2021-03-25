@@ -1,3 +1,4 @@
+/*----------------------- INDEX.html et LAYOUT PRINCIPAL------------------------*/
 body{
     display: grid;
     /*grid-template-rows: 20% 80% 20%;*/
@@ -8,7 +9,6 @@ body{
     row-gap: 5%;
 
 }
-
 header{
     position: relative;
     grid-area: header;
@@ -44,7 +44,7 @@ main{
     display: grid;
     grid-template-columns: 1fr 20fr ;
 }
-
+/*barre latérale gauche*/
 .sidebar{
     display: flex;
     justify-content: flex-end;
@@ -54,6 +54,7 @@ main{
     grid-row-end: 3;
     margin-right: 25px;
 }
+/*bouton de la sidebar*/
 .showHide {
     align-self: center;
     background-color: rgba(238,238,154,0.94);
@@ -64,6 +65,7 @@ main{
     cursor: pointer;
     z-index: 2;
 }
+/*texte de la sidebar*/
 .optionnal {
 position: absolute;
 align-self: center;
@@ -78,18 +80,21 @@ footer{
     height: 150px;
     background-color: darkblue;
 }
+/*container du texte du footer*/
 footer > div {
     width: 100%;
     height: 100%;
     display: flex;
     justify-content: space-around;
 }
+/*texte du footer*/
 footer >div> span{
     color: rgba(238,238,154,0.94);
     font-size: 25px;
     display: flex;
     align-items: center;
 }
+/*container de photo + description*/
 .picture_container {
     display: grid;
     /*grid-template-rows: 1fr 1fr ;*/
@@ -101,8 +106,8 @@ footer >div> span{
 }
 a{
     height: 300px;
-    
 }
+/*sous container photo*/
 .picture{
     display: grid;
     height:334px;
@@ -110,6 +115,7 @@ a{
     border: 3px black solid;
     overflow: hidden; 
 }
+/*photo description*/
 .picture > p {
     display: flex;
     width: 400px;
@@ -120,41 +126,122 @@ a{
     border-top: 2px solid;
     background-color: rgba(238,238,154,0.94);
 }
+/*photo description prix*/
 .picture > p > span{
   margin-right: 20px;
 }
-
+/* photo*/
 img{
     height: 300px;transition: all 1s ease;
 }
-
+/*style de l'ombre pour photo*/
 .shadow_picture{
     box-shadow: 0px 0px 16px 9px rgba(171,159,159,0.75);
 }
+/*effet de style*/
 .shadow_picture:hover{
     box-shadow: 0px 0px 70px 23px rgba(238,238,154,0.94);
     filter: brightness(1.3);
 }
 
+/*-----------------------PRODUCT.HTML-----------------------------------*/
 
-/*---------PRODUCT.HTML-------------*/
-.addToBasket{
-    width: 200px;
-    height: 100px;
-    font-size: 25px;
+/* layout particulier pour product.html*/
+.main_product{
+    grid-area: main;
+    min-height: 600px;
+    display: grid;
+    grid-template-columns: 1fr 8fr ;
+}
+/* modification du layout avec id*/
+#picture_container_productpage{
+    grid-template-columns: 2fr 2fr 1fr;
+}
+/* modification du layout avec id*/
+#picture_productpage{
+    height: 340px;
+    width: 470px;
+    position: relative;
+    background-size: 530px auto ;
+    background-position: left 0px top 0px;
+    background-image: url('');
+    overflow: hidden;
+}
+/* loupe pour photo*/
+#Loupe{
+    position: absolute;
+    width: 150px;
+    height:150px;
+    border: solid 6px white;
+    border-radius: 100px;
+    background-image: url('');
+    background-size: 550px auto ;
+    background-position: 50px;
+    box-shadow:  0 0 10px rgba(0,0,0,0.6);
+    filter: brightness(1.3);
+    
+}
+/*bouton pour activer la loupe*/
+.zoom{
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 30px;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+}
+/*apparition du bouton*/
+#picture_productpage:hover > .zoom {
+    opacity: 1;
+}
+/*placement de l'icone*/
+.fa-search {
+font-size: 20px;
+margin-right: 5px;
+}
+/* zone description produit*/
+/*container de la description*/
+.product_infos{
+    font-size: 22px;
+    height: 340px;
+    background-color: rgb(0, 0, 139, 0.1);
+    padding: 30px;
+    border: black 2px solid;
+    
+}
+/*titre description*/
+#h2_product{
+    color: black;
+    font-size: 35px;
+    margin-left: 0;
+   
+}
+/*petite baniere sur la qualité*/
+.product_infos > .little_banner {
+    border-top: 3px darkblue solid;
+    border-bottom: 3px darkblue solid;
+    color: darkblue;
     font-weight: bold;
     background-color: rgba(238,238,154,0.94);
-    border-radius: 10px;
-    cursor: pointer;
-    border: solid 3px black;
+    padding: 10px;
 }
-.btn-quantity{
-    background-color: rgba(238,238,154,0.94);
-    cursor: pointer;
+/*prix*/
+.product_infos > span {
+    background-color: white;
+    padding: 5px;
     border-radius: 10px;
-    width: 40px;
-    font-size: 20px;
+
 }
+/*picker de couleur*/
+select{
+    margin-left: 10px;
+}
+/*zone de quantité et bouton panier*/
+/*container zone panier*/
 .basketDiv{
     display: flex;
     height: 360px;
@@ -162,6 +249,7 @@ img{
     flex-direction: column;
     font-size: 25px;
 }
+/*lien vers le panier*/
 .basketDiv > a {
     text-align: center;
     color: rgba(238,238,154,0.94);
@@ -173,8 +261,28 @@ img{
     padding: 5px;
     background-color: darkblue;
 }
+/*quantité*/
 .basketDiv > p {
 line-height: 50px;
+}
+/*bouton ajouter au panier*/
+.addToBasket{
+    width: 200px;
+    height: 100px;
+    font-size: 25px;
+    font-weight: bold;
+    background-color: rgba(238,238,154,0.94);
+    border-radius: 10px;
+    cursor: pointer;
+    border: solid 3px black;
+}
+/* bouton + et - */
+.btn-quantity{
+    background-color: rgba(238,238,154,0.94);
+    cursor: pointer;
+    border-radius: 10px;
+    width: 40px;
+    font-size: 20px;
 }
 .info_quantity{
 font-size: 20px;
@@ -184,18 +292,7 @@ margin: 20px;
     font-size: 30px;
     padding: 40px;
 }
-.main_product{
-    grid-area: main;
-    min-height: 600px;
-    display: grid;
-    grid-template-columns: 1fr 8fr ;
-}
-#h2_product{
-    color: black;
-    font-size: 35px;
-    margin-left: 0;
-   
-}
+/*banniere nos engagement*/
 .banner {
     display: flex;
     flex-wrap: wrap;
@@ -216,101 +313,38 @@ margin: 20px;
 i{
     margin-right: 20px;
 }
-.product_infos{
-    font-size: 22px;
-    height: 340px;
-    background-color: rgb(0, 0, 139, 0.1);
-    padding: 30px;
-    border: black 2px solid;
-    
-}
-.product_infos > .little_banner {
-    border-top: 3px darkblue solid;
-    border-bottom: 3px darkblue solid;
-    color: darkblue;
-    font-weight: bold;
-    background-color: rgba(238,238,154,0.94);
-    padding: 10px;
-}
-.product_infos > span {
-    background-color: white;
-    padding: 5px;
-    border-radius: 10px;
-
-}
-select{
-    margin-left: 10px;
-}
-#picture_container_productpage{
-    grid-template-columns: 2fr 2fr 1fr;
-}
-#picture_productpage{
-    height: 340px;
-    width: 470px;
-    position: relative;
-    background-size: 530px auto ;
-    background-position: left 0px top 0px;
-    background-image: url('');
-    overflow: hidden;
-}
-
-#Loupe{
-    position: absolute;
-    width: 150px;
-    height:150px;
-    border: solid 6px white;
-    border-radius: 100px;
-    background-image: url('');
-    background-size: 550px auto ;
-    background-position: 50px;
-    box-shadow:  0 0 10px rgba(0,0,0,0.6);
-    filter: brightness(1.3);
-    
-}
-.zoom{
-    display: flex;
-    justify-content: center;
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    height: 30px;
-    font-size: 20px;
-    cursor: pointer;
-    opacity: 0;
-}
-#picture_productpage:hover > .zoom {
-    opacity: 1;
-}
-
-.fa-search {
-font-size: 20px;
-margin-right: 5px;
-}
-
-/*------------BASKET.HTML---------------*/
+/*----------------------------------------------BASKET.HTML----------------------------*/
+/*particularités page panier*/
 .main_basket{
     font-size: 21px;
 }
-
-.little_picture{
-    height: 120px;
-    width: 150px;
-    vertical-align: bottom;
-}
-
+/* gestion et mise en page du tableau*/
 table {
     display: grid;
     width: auto;
     margin: 0 20px 0 20px;
     
 }
+/*header tableau*/
+thead {
+    height: 50px;
+}
+/* disposition ligne header*/
+thead > tr{
+        display: grid;
+        grid-template-columns: 3fr 1fr 1fr 1fr;
+}
+/*cellule*/
+thead > tr > th {
+    text-align: start;
+}
+/*CORPS*/
 tbody{
     display: grid;
     grid-row-gap: 20px;
     
 }
-
+/* layout par ligne*/
 tbody > tr {
     display: grid;
     grid-template-columns: 3fr 1fr 1fr 1fr;
@@ -318,6 +352,7 @@ tbody > tr {
     background-color: rgba(238,238,154,0.7);
     padding: 10px;
 }
+/*cellule*/
 tbody > tr > td { 
     align-self: center;
     padding: 0;
@@ -329,29 +364,22 @@ tbody > tr > td > button {
     font-size: 20px;
     
 }
-tbody > tr > td >.little_picture { 
+/*--mini image panier----*/
+.little_picture{
+    height: 120px;
     border-radius: 60px;
     width: 120px;
     border: darkblue 3px solid;
+    vertical-align: bottom;
 }
-thead {
-    height: 50px;
-}
-thead > tr{
-        display: grid;
-        grid-template-columns: 3fr 1fr 1fr 1fr;
-}
-
-thead > tr > th {
-    text-align: start;
-}
-
+/* prix total*/
 .basket_total{
     text-align: end;
     margin-right: 25px;
     padding-bottom: 20px;
     border-bottom: darkblue 2px solid;
 }
+/* container de formulaire*/
 .form_container{
     height: 500px;
     display: grid;
@@ -360,6 +388,7 @@ thead > tr > th {
     column-gap: 10px;
 
 }
+/*formulaire*/
 form{
     background-color: rgb(0, 0, 139, 0.1);
     justify-self: end;
@@ -369,21 +398,23 @@ form{
     padding: 20px;
     justify-content: space-between;
 }
-
 /*phrase annonce formulaire*/
 .form_info{
     text-align: center;
     
 }
+/*lignes de formulaire*/
 form > div {
     width: 360px;
     display: flex;
     justify-content: space-between;
 }
+/*ligne container du bouton*/
 form > .btn_container {
     margin: 0 auto 0 auto;
     justify-content: center;
 }
+/*bouton order*/
 form > .btn_container > input{
     font-size: 25px;
     width: 100px;
@@ -391,11 +422,13 @@ form > .btn_container > input{
     cursor: pointer;
     background-color: rgba(238,238,154,0.7);
 }
+/*input global*/
 input{
     width: 250px;
     outline: none;
     border: grey 2px solid;
 }
+/* EFFET DE STYLE SELON DONNEES VALID/INVALID*/
 input:required {
     background-size:5%;
     background-image: url('../images/asterisk.png');
@@ -413,11 +446,13 @@ input:focus:valid{
 input:valid{
     background-image: none;
 }
+/*container d'aide au formulaire*/
 .formMessage{
     justify-self: center;
     right: 20px;
     width: 400px;  
 }
+/* bouton pour activer l'aide*/
 .help_btn{
     display: block;
     cursor: pointer;
@@ -427,7 +462,7 @@ input:valid{
     margin-top: 40px;
     background-color: rgb(143, 196, 143);
 }
-
+/*message d'aide, caché par défaut*/
 .help_message{
     border: 2px black solid;
     padding: 20px;
@@ -436,15 +471,7 @@ input:valid{
 }
 
 /*-------------ORDER.HTML-------------*/
-.order{
-    font-size: 20px;
-    text-align: start;
-    padding-left: 30px ;
-}
-.totalPrice{
-    font-size: 20px;
-    text-align: center;
-}
+/*container de la facture*/
 .orderContainer {
     width: 50%;
     position: relative;
@@ -460,6 +487,7 @@ input:valid{
     grid-row-start : 1;
     grid-row-end: 3 ;
 }
+/* logo merci pour votre achat*/
 .orderContainer > img {
     position: absolute;
     z-index: -1;
@@ -474,6 +502,7 @@ input:valid{
     padding: 20px;
     background-color: transparent;
 }
+/*order informations*/
 .orderContainer > p{
     font-size: 20px;
     padding: 20px;
@@ -481,12 +510,22 @@ input:valid{
     border-top: darkblue 2px dashed;
     border-bottom: darkblue 2px dashed;
 }
+.order{
+    font-size: 20px;
+    text-align: start;
+    padding-left: 30px ;
+}
+.totalPrice{
+    font-size: 20px;
+    text-align: center;
+}
+/*effet de style*/
 .orderContainer:hover {
     filter: brightness(1.1);
 }
+/*bouton pour vider panier*/
 .clean{
     font-size: 15px;
     background-color: greenyellow;
     margin: auto;
-    
 }
