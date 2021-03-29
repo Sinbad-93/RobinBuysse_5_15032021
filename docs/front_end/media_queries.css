@@ -28,11 +28,11 @@
         /**/
         right: 20vw;
        }
-    .link_container > a{
-     /**/
-     padding: 50px;
+    /*.link_container > a{
+     
+    padding: 50px;
 
-    }
+    }*/
     main{
 
         /**/
@@ -795,9 +795,9 @@ body{
 }
 /*particularités page panier*/
 .main_basket{
-    font-size: 21px;
+    font-size: 20px;
     /**/
-    width: 100%;
+    width: 95%;
 }
 
 /* gestion et mise en page du tableau*/

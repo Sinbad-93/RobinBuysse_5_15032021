@@ -38,13 +38,13 @@ function showData(data){
 }
 
 /*vérifier si un élément existe dans notre local storage, return true || false*/
-function isKeyExists(obj,key){
+function isKeyExist(obj,key){
       return obj.hasOwnProperty(key);
   }
 
 /*vérifier si le panier existe, sinon l'initialiser*/
 function initialiseBasket() {
- if (isKeyExists(localStorage,'inBasket') === false ){
+ if (isKeyExist(localStorage,'inBasket') === false ){
   var product_id = [];
   localStorage.setItem('inBasket', JSON.stringify(product_id));
  }
@@ -116,11 +116,11 @@ var zoom = 2;
 /* variable pour activer /desactiver le zoom*/
 var activeZoom = false;
 /* ecouter le passage de la souris sur la photo*/
-loupeContainer.addEventListener('mousemove',logKey);
+loupeContainer.addEventListener('mousemove',magnifierProduct);
 /*par défaut désactivée*/
 loupe.style.display = "none";
 /* fonction pour créer la loupe sur les photos*/
-function logKey(){
+function magnifierProduct(){
   if (activeZoom === true){
   loupe.style.left = event.clientX - 260 + 'px';
   loupe.style.top = event.clientY - 290 +'px';

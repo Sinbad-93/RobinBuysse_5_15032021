@@ -64,4 +64,5 @@ for (i = 0; i < (orderResume.length-2); i +=3){
 saveOrder(objetContact);
 /*réinitialiser le magasin*/
 function cleanBasket(){
-localStorage.clear();}
+localStorage.clear();
+alert('le localStorage a été vidé')}

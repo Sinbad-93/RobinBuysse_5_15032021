@@ -16,6 +16,7 @@ var title = document.querySelector('.title');
 var price = document.querySelector('.price');
 var description = document.querySelector('.description');
 var color1 = document.querySelector('.color1');
+var totalPrices = document.querySelector('.total');
 var helpBtn = document.querySelector('.help_btn');
 var helpMessage = document.querySelector('.help_message');
 
@@ -26,12 +27,8 @@ function getOneProduct(product_id){
   fetch('http://localhost:3000/api/teddies/' + product_id)
   .then(async response => {
     data = await response.json()
-  .then(data => requestData = data);
-  /*insérer les données dans une array*/
-    allData.push(requestData);
-    /*surveiller l'etat de l'array*/
-    dataWatch.watched= allData;
-     })}
+  .then(data => loadHTMLTable(data));
+     })};
 
 /*récuperer le contenu du panier pour pouvoir afficher les données*/
 function getAllBasket() {
@@ -55,38 +52,8 @@ function getAllBasket() {
     }; 
   }
 
-/*surveiller la fin de la requete fetch/ fin de la promesse avec getter et setter*/
-dataWatch = {
-  watchedValue: allData.length,
-  watchedListener: function(value) {},
-  set watched(value) {
-    this.watchedValue = value;
-    this.watchedListener(value);
-  },
-  get watched() {
-    return this.watchedValue;
-  },
-  registerListener: function(listener) {
-    this.watchedListener = listener;
-  }
-}
-/*fonction qui s'enclenche uniquement si la promesse est résolue*/
-dataWatch.registerListener(function(value) {
-  if (value.length === differentsProducts.length){ 
-    /*console.log('les données sont chargées');*/
-    /* A SUPPRIMER*/
-    /*compter les quantités d'articles*/
-    /*quantityCount(allData);*/
 
-    /*insérer les données dans le html*/
-    loadHTMLTable(allData);
-    /*faire le total*/
-    totalPrice();
-    
-    };
-}); 
-
-/*inserer les données sur la page*/
+/*inserer les données récupérée sur la page*/
 function loadHTMLTable(data) {
   /*récuperer élément du DOM*/
   const tableau = document.querySelector('table tbody');
@@ -97,24 +64,24 @@ function loadHTMLTable(data) {
 /*initialiser insertion de données*/
 let tableauHtml = "";
 /*insérer les données dans la variable en bouclant sur chaque produit*/
- for (i in data){
-   var memorisedId = data[i]['_id'];
       tableauHtml += "<tr>";
-      tableauHtml += `<td><img class="little_picture" src='${data[i]['imageUrl']}'></td>`;
-      tableauHtml += `<td class='name'>${data[i]['name']}</td>`;
-      tableauHtml += `<td class='price'>${data[i]['price']}</td>`;
-      tableauHtml += `<td> <span id="Id${memorisedId}" class="quantity">${productCountBefore(memorisedId)}</span>
-      <button id="${memorisedId}" onclick="removeProductToBasketClick(this.id);" >-</button>
-    <button id="${memorisedId}" onclick="addProductToBasketClick(this.id);" >+</button></td>`;
+      tableauHtml += `<td><img class="little_picture" src='${data['imageUrl']}'></td>`;
+      tableauHtml += `<td class='name'>${data['name']}</td>`;
+      tableauHtml += `<td class='price'>${data['price']}</td>`;
+      tableauHtml += `<td> <span id="Id${data['_id']}" class="quantity">${productCountBefore(data['_id'])}</span>
+      <button id="${data['_id']}" onclick="removeProductToBasketClick(this.id);" >-</button>
+    <button id="${data['_id']}" onclick="addProductToBasketClick(this.id);" >+</button></td>`;
       tableauHtml += "</tr>";
- }
+
+      /*faire le total des prix*quantités au fur et à mesure*/
+ totalPriceBefore(data['price'],productCountBefore(data['_id']) );
   /*insérer la variable dans un élément du DOM pour afficher données */
-  tableau.innerHTML = tableauHtml;
+  tableau.innerHTML += tableauHtml;
   /*Autre manière de faire :
   tableau.insertAdjacentHTML("afterbegin", tableauHtml);*/
 }
 
-/*----------------Afficher les quantités au chargement du DOM----------*/
+/*----------------Afficher les quantités du panier au chargement du DOM----------*/
 function productCountBefore(string_id){
   /*fonction similaire à celle dans product.js*/
   var inBasket = JSON.parse(localStorage.getItem('inBasket'));
@@ -127,11 +94,14 @@ function productCountBefore(string_id){
   /*actualiser les quantités*/
   return repetitonOfId;
 }
-/* A SUPPRIMER*/
-/*function quantityCount(data){
-  for (i in data){
-    productCountBefore(data[i])
-}}*/
+/*----------------Afficher le total quantités*prix au chargement du DOM----------*/
+var totalSum = [];
+/* fonction d'affichage du prix total au chargement de la page*/
+function totalPriceBefore(a,b){
+  totalSum.push(a*b);
+  const reducer = (accumulator, currentValue) => accumulator + currentValue;
+ totalPrices.innerHTML = totalSum.reduce(reducer);
+}
 
 /*-------------------AJOUTER UN ARTICLE DANS LE PANIER----------------*/
 function addProductToBasketById(productAdded){
@@ -164,8 +134,9 @@ function addProductToBasketById(productAdded){
    productCount(productAdded);
    totalPrice();
  }
- /*-COMPTER LE NOMBRE D ARTICLE DANS LE PANIER POUR ACTUALISER SUR LA PAGE, 
- APRES CHARGEMENT DU DOM----------*/
+
+ /*-COMPTER LE NOMBRE D ARTICLE DANS LE PANIER POUR ACTUALISER LES DONNEES quantités, 
+ après ajout ou suppression d'un produit----------*/
  function productCount(string_id){
    /*similaire à product.js*/
    var inBasket = JSON.parse(localStorage.getItem('inBasket'));
@@ -206,7 +177,6 @@ function totalPrice(){
   var arrayOfPrices = [];
   var arrayOfQuantity = [];
   /*éléments concernés*/
-  var totalPrices = document.querySelector('.total');
   var productsNames = document.querySelectorAll('.name');
  var productsPrices = document.querySelectorAll('.price');
  var productsQuantity = document.querySelectorAll('.quantity');
@@ -236,9 +206,8 @@ function totalPrice(){
   };
   /*afficher le prix total*/
   totalPrices.innerHTML = totalSum;
-  /* informations de commandes pour la page order*/
+  /* informations de commandes triés pour la page order*/
   localStorage.setItem('resumeOrder',JSON.stringify(resumeOrder));
-  console.log(resumeOrder);
 }
 /*Enregistrer les données pour la requete POST*/
 function saveData(){
@@ -262,7 +231,9 @@ function saveData(){
   localStorage.setItem('orderData',JSON.stringify(objetContact));
   /*console.log(JSON.stringify(objetContact));*/
   /*redirection vers la page order*/
-  document.location.href="order.html" ;
+  if (inBasket.length != 0){ 
+  document.location.href="order.html" ;}
+  else(alert('Vous ne pouvez pas passer commande avec un panier vide !'))
 }
 /* bouton d'aide au formulaire, afficher/cacher texte*/
 helpBtn.addEventListener('click', function(){
@@ -277,32 +248,3 @@ helpBtn.addEventListener('click', function(){
 /*GLOBAL*/
 /*lancer le script*/
 getAllBasket();
-
-
-/*-------------BROUILLON------------------*/
-/*function delayedAlert() {
-  
-  timeoutID = window.setTimeout(slowAlert, 5000);
-}*/
-/*loadHTMLTable(allData);*/
-
-/*function slowAlert() {
-  console.log('5 SECONDES');
-  totalPrice();
-}*/
-
-/* with error gest */
-/*function getOneProduct(product_id){
-  try {
-  fetch('http://localhost:3000/api/teddies/' + product_id)
-  .then(async response => {
-    if(response.ok){
-      const data = await response.json()
-  .then(data => requestData = data);
-  if (requestData != []){
-    allData.push(requestData);}} 
-  else {
-      console.error('Server response : ', response.status)
-    }});}  catch (err){
-      console.log(err)
-}}     */
