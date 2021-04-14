@@ -5,7 +5,7 @@ var price = document.querySelector('.teddyPrice');
 const container = document.querySelector('.picture_container');
 /*initialiser variable pour les futurs données*/
 let teddyData = "";
-let testo;
+
 async function getAllProduct(){
     await fetch('http://localhost:3000/api/teddies/')
   .then( response => {
@@ -14,11 +14,6 @@ const data = response.json()
 
 /*afficher les données sur le DOM*/
 function showAllTeddies(data){
-  /*gérer le cas du panier vide*/
-if (data.length === 0) {
-  container.innerHTML = "<span>Accès aux produits impossible</span>";
-return;}
-
 for (i in data){
 /*insérer les données dans la variable en bouclant sur chaque produit*/
   teddyData = `<div class='picture shadow_picture'><a href='product.html'>
@@ -31,16 +26,7 @@ for (i in data){
 
 /*insérer la variable dans un élément du DOM pour afficher données */
 container.innerHTML += teddyData;}
-
-  /*for (var i = 0; i < 5; i++){
-  var path = data[i]['imageUrl'];
-  picture.src = path;
-  teddyName.textContent = data[i]['name'];
-  price.textContent = data[i]['price'] + ' ¥';
-  }*/
 }
-
-
 
 /*fonction déclanchée sur le onclick html, permet de mémoriser sur quel produit l'on a cliqué */
 function getId(number)

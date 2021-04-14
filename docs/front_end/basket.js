@@ -245,11 +245,14 @@ helpBtn.addEventListener('click', function(){
     helpBtn.style.opacity = '1';}
 })
 
+/*--------------------Ajout après mentorat------------------------*/
+/*relier chaque élément du formulaire à une variable*/
 var firstNameInput = document.querySelector('#firstName');
 var lastNameInput = document.querySelector('#lastName');
 var addressInput = document.querySelector('#address');
 var cityInput = document.querySelector('#city');
 var emailInput = document.querySelector('#email');
+/*(les spans sont invisibles par défaut et apparaitrons en cas de mauvaise saisie)*/
 var firstNameSpan = document.querySelector('.firstNameSpan');
 var lastNameSpan = document.querySelector('.lastNameSpan');
 var addressSpan = document.querySelector('.addressSpan');
@@ -257,17 +260,27 @@ var citySpan = document.querySelector('.citySpan');
 var emailSpan = document.querySelector('.emailSpan');
 var formButton = document.querySelector('#formButton')
 
-window.addEventListener('click', function(){
+/*se relier au formulaire*/
+var form = document.querySelector('form');
+/*écouter l'evenement click sur le formulaire*/
+form.addEventListener('click', function(){
+  /* -INPUT1-réagir en fonction de l'élément qui est activé*/
   if (document.activeElement === firstNameInput){
+    /*écouter le click pour savoir si l'on est sorti de l'input,
+    et afficher une aide si la saisie est mauvaise
+    enlver l'aide si la saisie est bonne*/
       window.addEventListener('click', function(){
       if (document.activeElement != firstNameInput){
         if (firstNameInput.checkValidity() === false){
       firstNameSpan.style.display = 'inline';
+      /*passer dans la fonction de gestion de couleur du bouton formulaire*/
       colorOrderButton()
       }
       else {firstNameSpan.style.display = 'none';
+       /*passer dans la fonction de gestion de couleur du bouton formulaire*/
       colorOrderButton()}
     }})}
+    /*même principe que -INPUT1- juste au dessus*/
   else if (document.activeElement === lastNameInput){
     window.addEventListener('click', function(){
       if (document.activeElement != lastNameInput){
@@ -278,6 +291,7 @@ window.addEventListener('click', function(){
       else {lastNameSpan.style.display = 'none';
       colorOrderButton()}
     }})}
+    /*même principe que les autres input*/
   else if (document.activeElement === addressInput){
     window.addEventListener('click', function(){
       if (document.activeElement != addressInput){
@@ -288,6 +302,7 @@ window.addEventListener('click', function(){
       else {addressSpan.style.display = 'none';
       colorOrderButton()}
     }})}
+    /*même principe que les autres input*/
   else if (document.activeElement === cityInput){    
     window.addEventListener('click', function(){
       if (document.activeElement != cityInput){
@@ -298,6 +313,7 @@ window.addEventListener('click', function(){
       else {citySpan.style.display = 'none';
       colorOrderButton()}
     }})}
+    /*même principe que les autres inputé*/
   else if (document.activeElement === emailInput){
     window.addEventListener('click', function(){
       if (document.activeElement != emailInput){
@@ -307,20 +323,21 @@ window.addEventListener('click', function(){
       }
       else {emailSpan.style.display = 'none';
       colorOrderButton()}
-    }})}
-    
+    }})}  
 })
-
+/*fonction qui change la couleur du bouton du formulaire en fonction de la bonne saisie*/ 
 function colorOrderButton(){
+  /*si il n'y a pas de message d'aide...*/
   if ((emailSpan.style.display != 'inline')
 &(citySpan.style.display != 'inline')
 &(addressSpan.style.display != 'inline')
 &(lastNameSpan.style.display != 'inline')
 &(firstNameSpan.style.display != 'inline')){
-  console.log('vrai');
+  /*...alors couleur normale*/
   formButton.style.backgroundColor = 'rgba(238,238,154,0.7)';
 }
-else{console.log('faux')
+else{
+  /*...sinon couleur rouge*/
 formButton.style.backgroundColor = 'red';}
 }
 

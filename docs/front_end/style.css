@@ -474,6 +474,7 @@ input:focus:valid{
 input:valid{
     background-image: none;
 }
+/*message d'aide, invisible par defaut*/
 form > div > span {
 display: none;
 color: red;
