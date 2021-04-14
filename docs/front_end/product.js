@@ -16,10 +16,10 @@ var savedProducts = [];
 var id = localStorage.getItem('productId');
 
 /*récuperer les informations sur le produit cliqué via l'API*/
-function getOneProduct(string_id){
-  fetch('http://localhost:3000/api/teddies/' + string_id)
-  .then(async response => {
-const data = await response.json()
+async function getOneProduct(string_id){
+  await fetch('http://localhost:3000/api/teddies/' + string_id)
+  .then( response => {
+const data = response.json()
   .then(data => showData(data));	
      });}
 

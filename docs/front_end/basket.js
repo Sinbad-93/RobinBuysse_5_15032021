@@ -22,11 +22,11 @@ var helpMessage = document.querySelector('.help_message');
 
 
 /*récuperer un produit en fonction de son id, graçe à l'api*/
-function getOneProduct(product_id){
+async function getOneProduct(product_id){
   let data;
-  fetch('http://localhost:3000/api/teddies/' + product_id)
-  .then(async response => {
-    data = await response.json()
+  await fetch('http://localhost:3000/api/teddies/' + product_id)
+  .then( response => {
+    data = response.json()
   .then(data => loadHTMLTable(data));
      })};
 

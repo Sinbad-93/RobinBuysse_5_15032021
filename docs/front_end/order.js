@@ -2,14 +2,14 @@
 var objetContact = JSON.parse(localStorage.getItem('orderData'));
 
 /*poster les donner de commandes pour récupérer un id de commande*/
-function saveOrder(data){
+async function saveOrder(data){
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify( data )};
-    fetch('http://localhost:3000/api/teddies/order', requestOptions)
-    .then(async response => {
-        const data = await response.json()
+    await fetch('http://localhost:3000/api/teddies/order', requestOptions)
+    .then( response => {
+        const data =  response.json()
     .then(data => showOrder(data));/*afficher les données récupérés sur la page web*/
     // check for error response
      if (!response.ok) {
