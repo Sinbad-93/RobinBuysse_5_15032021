@@ -245,6 +245,85 @@ helpBtn.addEventListener('click', function(){
     helpBtn.style.opacity = '1';}
 })
 
+var firstNameInput = document.querySelector('#firstName');
+var lastNameInput = document.querySelector('#lastName');
+var addressInput = document.querySelector('#address');
+var cityInput = document.querySelector('#city');
+var emailInput = document.querySelector('#email');
+var firstNameSpan = document.querySelector('.firstNameSpan');
+var lastNameSpan = document.querySelector('.lastNameSpan');
+var addressSpan = document.querySelector('.addressSpan');
+var citySpan = document.querySelector('.citySpan');
+var emailSpan = document.querySelector('.emailSpan');
+var formButton = document.querySelector('#formButton')
+
+window.addEventListener('click', function(){
+  if (document.activeElement === firstNameInput){
+      window.addEventListener('click', function(){
+      if (document.activeElement != firstNameInput){
+        if (firstNameInput.checkValidity() === false){
+      firstNameSpan.style.display = 'inline';
+      colorOrderButton()
+      }
+      else {firstNameSpan.style.display = 'none';
+      colorOrderButton()}
+    }})}
+  else if (document.activeElement === lastNameInput){
+    window.addEventListener('click', function(){
+      if (document.activeElement != lastNameInput){
+        if (lastNameInput.checkValidity() === false){
+      lastNameSpan.style.display = 'inline';
+      colorOrderButton()
+      }
+      else {lastNameSpan.style.display = 'none';
+      colorOrderButton()}
+    }})}
+  else if (document.activeElement === addressInput){
+    window.addEventListener('click', function(){
+      if (document.activeElement != addressInput){
+        if (addressInput.checkValidity() === false){
+      addressSpan.style.display = 'inline';
+      colorOrderButton()
+      }
+      else {addressSpan.style.display = 'none';
+      colorOrderButton()}
+    }})}
+  else if (document.activeElement === cityInput){    
+    window.addEventListener('click', function(){
+      if (document.activeElement != cityInput){
+        if (cityInput.checkValidity() === false){
+      citySpan.style.display = 'inline';
+      colorOrderButton()
+      }
+      else {citySpan.style.display = 'none';
+      colorOrderButton()}
+    }})}
+  else if (document.activeElement === emailInput){
+    window.addEventListener('click', function(){
+      if (document.activeElement != emailInput){
+        if (emailInput.checkValidity() === false){
+      emailSpan.style.display = 'inline';
+      colorOrderButton()
+      }
+      else {emailSpan.style.display = 'none';
+      colorOrderButton()}
+    }})}
+    
+})
+
+function colorOrderButton(){
+  if ((emailSpan.style.display != 'inline')
+&(citySpan.style.display != 'inline')
+&(addressSpan.style.display != 'inline')
+&(lastNameSpan.style.display != 'inline')
+&(firstNameSpan.style.display != 'inline')){
+  console.log('vrai');
+  formButton.style.backgroundColor = 'rgba(238,238,154,0.7)';
+}
+else{console.log('faux')
+formButton.style.backgroundColor = 'red';}
+}
+
 /*GLOBAL*/
 /*lancer le script*/
 getAllBasket();

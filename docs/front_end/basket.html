@@ -42,28 +42,33 @@
   <form id="Form_id" action="javascript:void(0);" onsubmit="saveData()" >
     <p class="form_info">Enter your contact informations for finalize order :</p>
   <div>
-      <label for="first_name">Firstname :</label>
+      <div><label for="first_name">Firstname :</label>
       <input type="text" id="firstName" name="first_name" pattern="[A-Za-z\s'-]{1,50}" required>
+    </div><span class="firstNameSpan">Please, basic alphabet required, no special characters.</span>
   </div>
   <div>
+    <div>
     <label for="last_name">Lastname :</label>
     <input type="text" id="lastName" name="last_name" pattern="[A-Za-z\s'-]{1,50}" required>
-</div>
+</div><span class="lastNameSpan">Please, basic alphabet required, no special characters.</span></div>
 <div>
-    <label for="address">Address :</label>
+  <div>    <label for="address">Address :</label>
     <input type="text" id="address" name="address" pattern="[A-Za-z0-9\s'-]{1,250}" required> 
+</div><span class="addressSpan">Please, basic alphabet/number required, no special characters.</span>
 </div>
 <div>
-    <label for="city">City :</label>
+  <div>    <label for="city">City :</label>
     <input type="text" id="city" name="city" pattern="[A-Za-z\s'-]{1,100}" required>
+</div><span class="citySpan">Please, basic alphabet required, no special characters.</span>
 </div>
   <div>
-      <label for="user_mail">E-mail :</label>
+    <div>     <label for="user_mail">E-mail :</label>
       <input type="email" id="email" name="user_mail" 
       pattern="^[a-z0-9](\.?[a-z0-9_-]){0,}@[a-z0-9-]+\.([a-z]{1,6}\.)?[a-z]{2,6}$" required>
+ </div><span class="emailSpan">Please, email format is required (exemple : email@domain.fr).</span>
   </div>
 <div class="btn_container">
-    <input type="submit"  name="send" value="Order">
+    <input id="formButton" type="submit"  name="send" value="Order">
 </div></form>
 <div class="formMessage"> <button class="help_btn">Form help ?</button>
 <p class="help_message"> • Inputs with an asterisk are required for validate your order. <br>

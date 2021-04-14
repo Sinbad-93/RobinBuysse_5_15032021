@@ -430,6 +430,7 @@ form{
 form > div {
     width: 360px;
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
 }
 /*ligne container du bouton*/
@@ -473,6 +474,14 @@ input:focus:valid{
 input:valid{
     background-image: none;
 }
+form > div > span {
+display: none;
+color: red;
+font-family: initial;
+font-size: 16px;
+text-align: center;
+}
+
 /*container d'aide au formulaire*/
 .formMessage{
     justify-self: center;
