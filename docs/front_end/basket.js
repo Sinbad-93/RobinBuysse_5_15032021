@@ -79,7 +79,10 @@ function loadHTMLTable(data) {
       }" onclick="removeProductToBasketClick(this.id);" >-</button>
     <button id="${
       data["_id"]
-    }" onclick="addProductToBasketClick(this.id);" >+</button></td>`;
+    }" onclick="addProductToBasketClick(this.id);" >+</button></td>
+    <button id="${
+      data["_id"]
+    }" onclick="removeAllProductsById(this.id);" >SUPPR</button></td>`;
   tableauHtml += "</tr>";
 
   /*faire le total des prix*quantités au fur et à mesure*/
@@ -136,6 +139,24 @@ function removeProductToBasketById(productAdded) {
   } else {
     alert("quantité déjà à zéro dans votre panier");
   }
+  localStorage.setItem("inBasket", JSON.stringify(inBasket));
+
+  /*inBasket =  JSON.parse(localStorage.getItem('inBasket'));*/
+
+  productCount(productAdded);
+  totalPrice();
+}
+
+/*Supprimer tous les produits du panier */
+function removeAllProductsById(productAdded){
+    /*fonction déjà commenté dans product.js*/
+  var inBasket = JSON.parse(localStorage.getItem("inBasket"));
+  var position = inBasket.indexOf(productAdded);
+  while (position > -1) {
+    var position = inBasket.indexOf(productAdded);
+    if (position === null){return}
+    var removedItem = inBasket.splice(position, 1);
+  } 
   localStorage.setItem("inBasket", JSON.stringify(inBasket));
 
   /*inBasket =  JSON.parse(localStorage.getItem('inBasket'));*/
