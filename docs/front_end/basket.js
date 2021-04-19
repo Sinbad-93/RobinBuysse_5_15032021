@@ -19,6 +19,7 @@ var color1 = document.querySelector(".color1");
 var totalPrices = document.querySelector(".total");
 var helpBtn = document.querySelector(".help_btn");
 var helpMessage = document.querySelector(".help_message");
+const tableau = document.querySelector("table tbody");
 
 /*récuperer un produit en fonction de son id, graçe à l'api*/
 async function getOneProduct(product_id) {
@@ -57,7 +58,7 @@ function getAllBasket() {
 /*inserer les données récupérée sur la page*/
 function loadHTMLTable(data) {
   /*récuperer élément du DOM*/
-  const tableau = document.querySelector("table tbody");
+  /*const tableau = document.querySelector("table tbody");*/
   /*gérer le cas du panier vide*/
   if (data.length === 0) {
     tableau.innerHTML =
@@ -67,7 +68,7 @@ function loadHTMLTable(data) {
   /*initialiser insertion de données*/
   let tableauHtml = "";
   /*insérer les données dans la variable en bouclant sur chaque produit*/
-  tableauHtml += "<tr>";
+  tableauHtml += `<tr id="product_${data["_id"]}">`;
   tableauHtml += `<td><img class="little_picture" src='${data["imageUrl"]}'></td>`;
   tableauHtml += `<td class='name'>${data["name"]}</td>`;
   tableauHtml += `<td class='price'>${data["price"]}</td>`;
@@ -79,10 +80,10 @@ function loadHTMLTable(data) {
       }" onclick="removeProductToBasketClick(this.id);" >-</button>
     <button id="${
       data["_id"]
-    }" onclick="addProductToBasketClick(this.id);" >+</button></td>
-    <button id="${
+    }" onclick="addProductToBasketClick(this.id);" >+</button>
+    <button alt="trash all quantity of this product" id="${
       data["_id"]
-    }" onclick="removeAllProductsById(this.id);" >SUPPR</button></td>`;
+    }" onclick="removeAllProductsById(this.id);" ><i class="fas fa-trash-alt"></i></button></td>`;
   tableauHtml += "</tr>";
 
   /*faire le total des prix*quantités au fur et à mesure*/
@@ -180,13 +181,25 @@ function productCount(string_id) {
   if (document.querySelector(".quantity") != null) {
     /*récuperer l'élément quantité par sa classe et par son id*/
     var quantity = document.querySelectorAll(".quantity");
-    var compareId = document.querySelector("#Id" + string_id);
+    var domElementById = document.querySelector("#Id" + string_id);
     /*comparer les deux pour changer la quantité uniquement
   du produit concerné par l'id passé en paramètre*/
-    for (value of quantity.values()) {
-      if (value === compareId) {
+    for (domElement of quantity.values()) {
+      if (domElement === domElementById) {
         /*actualiser les quantités du produit cliqué*/
-        value.textContent = repetitonOfId;
+        domElement.textContent = repetitonOfId;
+        if (domElement.textContent === '0'){
+          var productQuantityZero = document.getElementById('product_'+string_id);
+          productQuantityZero.remove();
+          /*console.log(tableau.hasChildNodes());
+          console.log(tableau);*/
+          //Attention il ne doit pas y avoir de balise commentaire ni d'espace dans la balise tbody
+          if (!tableau.hasChildNodes()) {
+            /*console.log('pas de données');*/
+            tableau.innerHTML =
+              "<tr><td class='no-data' colspan='5'>Votre panier est vide</td></tr>";
+          }
+        }
       } else {
         /* ne rien faire, car si le DOM n'est pas completement chargé ne pas séléctionner le DOM*/
       }
@@ -262,6 +275,8 @@ function saveData() {
     city: costumerCity.value,
     email: costumerEmail.value,
   };
+  /*VARIABLE RAJ APRES SOUTENANCE EVITER BUG*/
+  var inBasket = JSON.parse(localStorage.getItem("inBasket"));
   /* syntaxe pour la requête*/
   products = inBasket;
   let objetContact = { contact, products };
@@ -392,7 +407,9 @@ form.addEventListener("click", function () {
     });
   }
 });
-
+function logBasket(){
+console.log(inBasket)
+ }
 /*GLOBAL*/
 /*lancer le script*/
 getAllBasket();

@@ -376,6 +376,10 @@ tbody > tr > td > button {
   font-size: 20px;
   cursor: pointer;
 }
+/*icone poubelle*/
+.fa-trash-alt {
+margin-right:  0;
+}
 /*--mini image panier----*/
 .little_picture {
   height: 120px;

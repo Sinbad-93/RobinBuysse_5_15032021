@@ -822,7 +822,7 @@
   tbody > tr > :nth-child(4) {
     /**/
     border: 2px solid black;
-    padding: 5px;
+    padding: 2px;
     background-color: white;
   }
   tbody > tr > td > button {
