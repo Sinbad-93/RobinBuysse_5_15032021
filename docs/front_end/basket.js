@@ -71,7 +71,7 @@ function loadHTMLTable(data) {
   tableauHtml += `<tr id="product_${data["_id"]}">`;
   tableauHtml += `<td><img class="little_picture" src='${data["imageUrl"]}'></td>`;
   tableauHtml += `<td class='name'>${data["name"]}</td>`;
-  tableauHtml += `<td class='price'>${data["price"]}</td>`;
+  tableauHtml += `<td class='price'>${convertPrice(data["price"])}</td>`;
   tableauHtml += `<td> <span id="Id${
     data["_id"]
   }" class="quantity">${productCountBefore(data["_id"])}</span>
@@ -87,13 +87,22 @@ function loadHTMLTable(data) {
   tableauHtml += "</tr>";
 
   /*faire le total des prix*quantités au fur et à mesure*/
-  totalPriceBefore(data["price"], productCountBefore(data["_id"]));
+  totalPriceBefore(convertPrice(data["price"]), productCountBefore(data["_id"]));
   /*insérer la variable dans un élément du DOM pour afficher données */
   tableau.innerHTML += tableauHtml;
   /*Autre manière de faire :
   tableau.insertAdjacentHTML("afterbegin", tableauHtml);*/
 }
 
+/* convertir le prix en €*/
+function convertPrice(number){
+  console.log(typeof number);
+  string = number.toString();
+  var virg = ",";
+  var convert = string.substring(0, 2) + virg + string.substring(2);
+  var convertNumber = parseFloat(convert);
+    return convertNumber;
+}
 /*----------------Afficher les quantités du panier au chargement du DOM----------*/
 function productCountBefore(string_id) {
   /*fonction similaire à celle dans product.js*/
@@ -261,6 +270,7 @@ function totalPrice() {
 }
 /*Enregistrer les données pour la requete POST*/
 function saveData() {
+  totalPrice();
   /*données de contact formulaire*/
   var costumerFirstName = document.querySelector("#firstName");
   var costumerLastName = document.querySelector("#lastName");

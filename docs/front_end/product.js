@@ -31,13 +31,21 @@ function showData(data) {
   product.style.backgroundImage = "url(" + path + ")";
   loupe.style.backgroundImage = "url(" + path + ")";
   title.textContent = data["name"];
-  price.textContent = data["price"] + " ¥";
+  price.textContent = convertPrice(data["price"]) + " €";
   description.textContent = data["description"];
   color1.textContent = data["colors"][0];
   color2.textContent = data["colors"][1];
   color3.textContent = data["colors"][2];
 }
-
+/* convertir le prix en €*/
+function convertPrice(number){
+  console.log(typeof number);
+  string = number.toString();
+  var virg = ",";
+  var convert = string.substring(0, 2) + virg + string.substring(2);
+  var convertNumber = parseFloat(convert);
+    return convertNumber;
+}
 /*vérifier si un élément existe dans notre local storage, return true || false*/
 function isKeyExist(obj, key) {
   return obj.hasOwnProperty(key);

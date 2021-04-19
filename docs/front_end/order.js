@@ -73,7 +73,7 @@ function showOrder(data) {
       numero += 1;
     }
     /*afficher le total*/
-    totalPrice.innerHTML = "Final price order : " + sumPrices + " ¥";
+    totalPrice.innerHTML = "Final price order : " + sumPrices + " €";
   }
 }
 /*lancer le script*/

@@ -16,18 +16,28 @@ async function getAllProduct() {
 /*afficher les données sur le DOM*/
 function showAllTeddy(data) {
   for (i in data) {
+    console.log( data[i]["price"]);
     /*insérer les données dans la variable en bouclant sur chaque produit*/
     teddyData = `<div class='picture shadow_picture'><a href='product.html'>
   <img id='teddy${i + 1 + "_" + data[i]["_id"]}' 
   class='teddy' onclick='getId(this.id);'
    src='${data[i]["imageUrl"]}' alt=''></a><p> 
   <span class='teddyName'>${data[i]["name"]}</span>
-  <span class='teddyPrice'>${data[i]["price"]}</span>
+  <span class='teddyPrice'>${convertPrice(data[i]["price"])} €</span>
   </p></div>`;
 
     /*insérer la variable dans un élément du DOM pour afficher données */
     container.innerHTML += teddyData;
   }
+}
+
+function convertPrice(number){
+  console.log(typeof number);
+  string = number.toString();
+  var virg = ",";
+  var convert = string.substring(0, 2) + virg + string.substring(2);
+  var convertNumber = parseFloat(convert);
+    return convert;
 }
 
 /*fonction déclanchée sur le onclick html, permet de mémoriser sur quel produit l'on a cliqué */
