@@ -3,10 +3,11 @@
 /*selectionner éléments du DOM*/
 var sideBar = document.querySelector(".sidebar");
 var showHide = document.querySelector(".showHide");
-var sideBarWidth = window
+/*var sideBarWidth = window
   .getComputedStyle(sideBar, null)
-  .getPropertyValue("width");
-/*Fonction qui permet de switcher entre les deux etats*/
+  .getPropertyValue("width");*/
+  
+/*Fonction qui permet de switcher entre les deux etats au click*/
 function showHideSideBar() {
   if (showHide.textContent === "⇦") {
     sideBar.style.transition = "width 2s";
