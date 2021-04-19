@@ -2,16 +2,17 @@
 var objetContact = JSON.parse(localStorage.getItem("orderData"));
 
 /*poster les donner de commandes pour récupérer un id de commande*/
-async function saveOrder(data) {
+/* utilisation de promesse .then() . catch()*/
+function saveOrder(data) {
   const requestOptions = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   };
-  await fetch("http://localhost:3000/api/teddies/order", requestOptions)
+  fetch("http://localhost:3000/api/teddies/order", requestOptions)
     .then((response) => {
-      const data = response
-        .json()
+      const data = 
+        response.json()
         .then((data) =>
           showOrder(data)
         ); /*afficher les données récupérés sur la page web*/
@@ -27,6 +28,21 @@ async function saveOrder(data) {
       console.error("There was an error!", error);
     });
 }
+
+/* avec Async/Awiat et gestion erreur pour Memoriser
+async function saveOrder(data) {
+  const requestOptions = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  };
+  try{
+  const response = await fetch("http://localhost:3000/api/teddies/order", requestOptions);
+  const data = await response.json();
+  showOrder(data);}
+  catch (error) {
+    console.error(error);}
+}*/
 
 /*compteur utilisé dans la fonction showOrder*/
 var numero = 1;

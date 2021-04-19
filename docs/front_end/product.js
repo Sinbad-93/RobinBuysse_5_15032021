@@ -17,12 +17,22 @@ var id = localStorage.getItem("productId");
 
 /*récuperer les informations sur le produit cliqué via l'API*/
 async function getOneProduct(string_id) {
-  await fetch("http://localhost:3000/api/teddies/" + string_id).then(
+  try { const response = await fetch("http://localhost:3000/api/teddies/" + string_id);
+  const data = await response.json();
+  showData(data);}
+  catch (error) {
+    console.error(error);}
+}
+
+/* Avec then() :
+function getOnProduct(string_id) {
+fetch("http://localhost:3000/api/teddies/" + string_id)
+.then(
     (response) => {
       const data = response.json().then((data) => showData(data));
     }
   );
-}
+}*/
 
 /*afficher les données sur le DOM*/
 function showData(data) {
@@ -39,7 +49,6 @@ function showData(data) {
 }
 /* convertir le prix en €*/
 function convertPrice(number){
-  console.log(typeof number);
   string = number.toString();
   var virg = ",";
   var convert = string.substring(0, 2) + virg + string.substring(2);

@@ -8,15 +8,35 @@ let teddyData = "";
 
 /*requete fetch asynchrone de récuparation des données*/
 async function getAllProduct() {
-  await fetch("http://localhost:3000/api/teddies/").then((response) => {
-    const data = response.json().then((data) => showAllTeddy(data));
-  });
+  try{ const response = await fetch("http://localhost:3000/api/teddies/");
+  const data = await response.json();
+  showAllTeddy(data);}
+  catch (error) {
+    console.error(error);}
 }
+
+/*Variante avec promise then, POUR MEMORISER :
+function forExample() {
+  fetch("http://localhost:3000/api/teddies/")
+  .then(
+    function(response) {
+      if (response.status !== 200) {
+        console.log('Error : Status Code: ' +
+          response.status);
+        return;
+      }response.json().then(function(data) {
+        showAllTeddy(data);
+      });
+    }
+  )
+  .catch(function(err) {
+    console.log('Fetch Error', err);
+  });
+}*/
 
 /*afficher les données sur le DOM*/
 function showAllTeddy(data) {
   for (i in data) {
-    console.log( data[i]["price"]);
     /*insérer les données dans la variable en bouclant sur chaque produit*/
     teddyData = `<div class='picture shadow_picture'><a href='product.html'>
   <img id='teddy${i + 1 + "_" + data[i]["_id"]}' 
@@ -32,7 +52,6 @@ function showAllTeddy(data) {
 }
 
 function convertPrice(number){
-  console.log(typeof number);
   string = number.toString();
   var virg = ",";
   var convert = string.substring(0, 2) + virg + string.substring(2);

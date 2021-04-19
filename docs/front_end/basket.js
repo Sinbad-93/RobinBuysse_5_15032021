@@ -23,12 +23,11 @@ const tableau = document.querySelector("table tbody");
 
 /*récuperer un produit en fonction de son id, graçe à l'api*/
 async function getOneProduct(product_id) {
-  let data;
-  await fetch("http://localhost:3000/api/teddies/" + product_id).then(
-    (response) => {
-      data = response.json().then((data) => loadHTMLTable(data));
-    }
-  );
+  try {const response = await fetch("http://localhost:3000/api/teddies/" + product_id);
+  const data = await response.json();
+  loadHTMLTable(data);}
+  catch (error) {
+    console.error(error);}
 }
 
 /*récuperer le contenu du panier pour pouvoir afficher les données*/
@@ -96,7 +95,6 @@ function loadHTMLTable(data) {
 
 /* convertir le prix en €*/
 function convertPrice(number){
-  console.log(typeof number);
   string = number.toString();
   var virg = ",";
   var convert = string.substring(0, 2) + virg + string.substring(2);
@@ -209,8 +207,6 @@ function productCount(string_id) {
               "<tr><td class='no-data' colspan='5'>Votre panier est vide</td></tr>";
           }
         }
-      } else {
-        /* ne rien faire, car si le DOM n'est pas completement chargé ne pas séléctionner le DOM*/
       }
     }
   }
@@ -295,7 +291,8 @@ function saveData() {
   /*redirection vers la page order*/
   if (inBasket.length != 0) {
     document.location.href = "order.html";
-  } else alert("Vous ne pouvez pas passer commande avec un panier vide !");
+  } else {
+    alert("Vous ne pouvez pas passer commande avec un panier vide !");}
 }
 /* bouton d'aide au formulaire, afficher/cacher texte*/
 helpBtn.addEventListener("click", function () {
